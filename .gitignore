@@ -1,0 +1,7 @@
+bundle/**
+swap/*
+backup/*
+undo/*
+!swap/.gitkeep
+!backup/.gitkeep
+!undo/.gitkeep
