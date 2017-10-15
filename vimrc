@@ -15,7 +15,8 @@ syntax on               " syntax highlighting
 set showcmd             " show (partial) command in status line
 set shiftwidth=4
 
-"colorscheme solarized
+set background=dark
+colorscheme solarized
 let mapleader = "\<space>"
 "-----mappings-----"
 nmap <leader>ev :tabedit $MYVIMRC<cr>
