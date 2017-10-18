@@ -20,8 +20,6 @@
     Plugin 'terryma/vim-multiple-cursors'
     Plugin 'tpope/vim-surround.git'
     Plugin 'tpope/vim-fugitive.git'
-    " Plugin 'vim-syntastic/syntastic'
-    Plugin 'w0rp/ale'
     Plugin 'davidhalter/jedi-vim'
     Plugin 'ervandew/supertab'
     Plugin 'vim-airline/vim-airline'
@@ -29,6 +27,12 @@
     Plugin 'justinmk/vim-sneak'
     Plugin 'tpope/vim-commentary'
     Plugin 'sheerun/vim-polyglot'
+    if version > 800
+        Plugin 'w0rp/ale'
+    endif
+    if version < 799
+        Plugin 'vim-syntastic/syntastic'
+    endif
 
     if iCanHazVundle == 0
         echo "Installing Vundles, please ignore key map error messages"
