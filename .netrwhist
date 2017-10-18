@@ -1,2 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =0
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/justinhoyt/Documents/CIS_405'
+let g:netrw_dirhist_2='/Users/justinhoyt/Documents/CIS_405/.idea'
+let g:netrw_dirhist_3='/Users/justinhoyt/Documents'
+let g:netrw_dirhist_4='/Users/justinhoyt/Documents/Linked List'
+let g:netrw_dirhist_5='/Users/justinhoyt/Documents'
+let g:netrw_dirhist_6='/Users/justinhoyt/Documents/python'

@@ -15,7 +15,6 @@
     Plugin 'VundleVim/Vundle.vim'
     "Add your bundles here
     Plugin 'tpope/vim-vinegar'
-    Plugin 'scrooloose/nerdtree'
     Plugin 'ctrlpvim/ctrlp.vim'
     Plugin 'tpope/vim-sensible'
     Plugin 'terryma/vim-multiple-cursors'
@@ -25,7 +24,9 @@
     Plugin 'davidhalter/jedi-vim'
     Plugin 'ervandew/supertab'
     Plugin 'vim-airline/vim-airline'
-    Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
+    Plugin 'altercation/vim-colors-solarized' 
+    Plugin 'justinmk/vim-sneak'
+    Plugin 'tpope/vim-commentary'
 
     if iCanHazVundle == 0
         echo "Installing Vundles, please ignore key map error messages"

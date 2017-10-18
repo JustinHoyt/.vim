@@ -10,25 +10,33 @@ set tabstop=4           " use 4 spaces to represent tab
 set softtabstop=4
 set shiftwidth=4        " number of spaces to use for auto indent
 set autoindent          " copy indent from current line when starting a new line
-set ruler                           " show line and column number
 syntax on               " syntax highlighting
 set showcmd             " show (partial) command in status line
 set shiftwidth=4
-
+" set number                     " Show current line number
+" set relativenumber             " Show relative line numbers
 set background=dark
 colorscheme solarized
 let mapleader = "\<space>"
+
 "-----mappings-----"
 nmap <leader>ev :tabedit $MYVIMRC<cr>
 nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
-nmap <leader>nt :NERDTreeToggle<CR>
 nmap <leader>rt :%retab<CR>
+nmap <leader>pi :PluginInstall<CR>
+" more natural windows mappings
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 let g:multi_cursor_use_default_mapping=0
 " Default mapping
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<C-q>'
+let g:multi_cursor_quit_key='<C-c>'
+nnoremap <C-c> :call multiple_cursors#quit()<CR>
 let NERDTreeShowHidden=1
 
 "-----auto-commands-----"
