@@ -27,10 +27,10 @@
     Plugin 'justinmk/vim-sneak'
     Plugin 'tpope/vim-commentary'
     Plugin 'sheerun/vim-polyglot'
-    if version > 800
+    if version >= 800
         Plugin 'w0rp/ale'
     endif
-    if version < 799
+    if version < 800
         Plugin 'vim-syntastic/syntastic'
     endif
 
