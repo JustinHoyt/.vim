@@ -5,3 +5,4 @@ undo/*
 !swap/.gitkeep
 !backup/.gitkeep
 !undo/.gitkeep
+.netrwhist
