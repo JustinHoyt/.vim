@@ -27,6 +27,8 @@
     Plugin 'justinmk/vim-sneak'
     Plugin 'tpope/vim-commentary'
     Plugin 'sheerun/vim-polyglot'
+    Plugin 'tpope/vim-repeat'
+
     if version >= 800
         Plugin 'w0rp/ale'
     endif
