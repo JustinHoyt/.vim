@@ -18,7 +18,6 @@ set shiftwidth=4
 set background=dark
 colorscheme solarized
 let mapleader = "\<space>"
-
 "-----mappings-----"
 nmap <leader>ev :tabedit $MYVIMRC<cr>
 nmap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
@@ -72,11 +71,11 @@ vnoremap p "_dp
 nnoremap <leader>v V`]
 
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
