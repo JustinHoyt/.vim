@@ -13,7 +13,6 @@
     set rtp+=~/.vim/bundle/vundle/
     call vundle#begin()
     Plugin 'VundleVim/Vundle.vim'
-    "Add your bundles here
     Plugin 'tpope/vim-vinegar'
     Plugin 'ctrlpvim/ctrlp.vim'
     Plugin 'tpope/vim-sensible'
