@@ -24,7 +24,6 @@
     Plugin 'ervandew/supertab'
     Plugin 'vim-airline/vim-airline'
     Plugin 'altercation/vim-colors-solarized' 
-    Plugin 'justinmk/vim-sneak'
     Plugin 'tpope/vim-commentary'
     Plugin 'sheerun/vim-polyglot'
     Plugin 'tpope/vim-repeat'
