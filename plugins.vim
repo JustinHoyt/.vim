@@ -16,7 +16,6 @@
     Plugin 'tpope/vim-vinegar'
     Plugin 'ctrlpvim/ctrlp.vim'
     Plugin 'tpope/vim-sensible'
-    Plugin 'terryma/vim-multiple-cursors'
     Plugin 'tpope/vim-surround.git'
     Plugin 'tpope/vim-fugitive.git'
     Plugin 'davidhalter/jedi-vim'
