@@ -14,11 +14,13 @@ nnoremap <leader>ep :tabedit ~/.vim/plugins.vim<cr>
 nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PluginInstall<CR>
 nnoremap <leader>rp :!python %<CR>
+nnoremap <leader>pt :!pytest %<CR>
 " more natural windows mappings
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+nnoremap <C-=> <C-W><C-=>
 
 "-----auto-commands-----"
 augroup autosourcing

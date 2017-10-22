@@ -25,6 +25,7 @@
     Plugin 'tpope/vim-commentary'
     Plugin 'sheerun/vim-polyglot'
     Plugin 'tpope/vim-repeat'
+    Plugin 'christoomey/vim-tmux-navigator'
 
     if version >= 800
         Plugin 'w0rp/ale'
