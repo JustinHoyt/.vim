@@ -26,6 +26,8 @@
     Plugin 'sheerun/vim-polyglot'
     Plugin 'tpope/vim-repeat'
     Plugin 'christoomey/vim-tmux-navigator'
+    Plugin 'easymotion/vim-easymotion'
+    Plugin 'pangloss/vim-javascript'
 
     if version >= 800
         Plugin 'w0rp/ale'

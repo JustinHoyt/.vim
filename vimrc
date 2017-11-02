@@ -14,7 +14,9 @@ nnoremap <leader>ep :e ~/.vim/plugins.vim<cr>
 nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PluginInstall<CR>
 nnoremap <leader>rp :!python %<CR>
-nnoremap <leader>pt :!pytest %<CR>
+nnoremap <leader>pt :!pytest<CR>
+nnoremap <leader>bb :b#<CR>
+nnoremap <leader>bd :bd<CR>
 " more natural windows mappings
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
