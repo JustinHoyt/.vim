@@ -28,6 +28,7 @@
     Plugin 'christoomey/vim-tmux-navigator'
     Plugin 'easymotion/vim-easymotion'
     Plugin 'pangloss/vim-javascript'
+    Plugin 'artur-shaik/vim-javacomplete2'
 
     if version >= 800
         Plugin 'w0rp/ale'

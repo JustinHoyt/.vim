@@ -45,3 +45,11 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:ctrlp_max_files=0 
+" Ignore these directories
+set wildignore+=*/build/**
+set wildignore+=*/bin/**
+set wildignore+=*/node_modules/**
+" disable caching
+let g:ctrlp_use_caching=0
+let g:ctrlp_max_depth=40
