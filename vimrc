@@ -17,6 +17,7 @@ nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
 nnoremap <leader>bb :b#<CR>
 nnoremap <leader>bd :bd<CR>
+set pastetoggle=<leader>p
 " more natural windows mappings
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
