@@ -26,7 +26,6 @@
     Plugin 'sheerun/vim-polyglot'
     Plugin 'tpope/vim-repeat'
     Plugin 'christoomey/vim-tmux-navigator'
-    Plugin 'easymotion/vim-easymotion'
     Plugin 'pangloss/vim-javascript'
     Plugin 'artur-shaik/vim-javacomplete2'
 

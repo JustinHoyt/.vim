@@ -17,6 +17,7 @@ nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
 nnoremap <leader>bb :b#<CR>
 nnoremap <leader>bd :bd<CR>
+nnoremap <leader>pv :!(cd ~/.vim && git pull)<CR>
 set pastetoggle=<leader>p
 " more natural windows mappings
 nnoremap <C-J> <C-W><C-J>
