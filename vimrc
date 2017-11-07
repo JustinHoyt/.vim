@@ -26,10 +26,10 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
 " buffer mappings
-set hidden 		      " This allows buffers to be hidden if you've modified a buffer
-nmap <leader>t :enew<cr>      " To open a new empty buffer
-nmap <leader>l :bnext<CR>     " Move to the next buffer
-nmap <leader>h :bprevious<CR> " Move to the previous buffer
+set hidden		      " This allows buffers to be hidden if you've modified a buffer
+nnoremap <leader>t :enew<cr>  " To open a new empty buffer
+nnoremap <S-l> :bnext<CR>     " Move to the next buffer
+nnoremap <S-h> :bprevious<CR> " Move to the previous buffer
 
 "-----auto-commands-----"
 augroup autosourcing
