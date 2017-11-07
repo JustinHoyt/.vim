@@ -18,6 +18,7 @@ nnoremap <leader>pt :!pytest<CR>
 nnoremap <leader>bb :b#<CR>
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>pv :!(cd ~/.vim && git pull)<CR>
+cmap w!! w !sudo tee > /dev/null % " Allow saving of files as sudo when I forgot to start vim using sudo
 set pastetoggle=<leader>p
 " more natural windows mappings
 nnoremap <C-J> <C-W><C-J>
@@ -47,6 +48,7 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
+
 let g:ctrlp_max_files=0 
 " Ignore these directories
 set wildignore+=*/build/**
