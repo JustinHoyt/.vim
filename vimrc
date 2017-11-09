@@ -20,12 +20,6 @@ nnoremap <leader>bd :bd<CR>
 nnoremap <leader>pv :!(cd ~/.vim && git pull)<CR>
 cmap w!! w !sudo tee > /dev/null % " Allow saving of files as sudo when I forgot to start vim using sudo
 set pastetoggle=<leader>p
-" more natural windows mappings
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-nnoremap <C-=> <C-W><C-=>
 " buffer mappings
 set hidden		      " This allows buffers to be hidden if you've modified a buffer
 nnoremap <leader>t :enew<cr>  " To open a new empty buffer
