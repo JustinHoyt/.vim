@@ -17,7 +17,6 @@
     Plugin 'ctrlpvim/ctrlp.vim'
     Plugin 'tpope/vim-sensible'
     Plugin 'tpope/vim-surround.git'
-    Plugin 'tpope/vim-fugitive.git'
     Plugin 'davidhalter/jedi-vim'
     Plugin 'ervandew/supertab'
     Plugin 'vim-airline/vim-airline'
@@ -28,6 +27,9 @@
     Plugin 'christoomey/vim-tmux-navigator'
     Plugin 'pangloss/vim-javascript'
     Plugin 'artur-shaik/vim-javacomplete2'
+    Plugin 'majutsushi/tagbar'
+    Plugin 'honza/vim-snippets'
+    Plugin 'SirVer/ultisnips'
 
     if version >= 800
         Plugin 'w0rp/ale'
