@@ -31,6 +31,8 @@ set hidden		      " This allows buffers to be hidden if you've modified a buffer
 nnoremap <leader>t :enew<cr>  " To open a new empty buffer
 nnoremap <S-l> :bnext<CR>     " Move to the next buffer
 nnoremap <S-h> :bprevious<CR> " Move to the previous buffer
+let g:UltiSnipsJumpForwardTrigger="<leader>j"
+let g:UltiSnipsJumpBackwardTrigger="<leader>k"
 
 "-----auto-commands-----"
 augroup autosourcing
