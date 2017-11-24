@@ -70,7 +70,6 @@ let mapleader = "\<space>"
 
 "-----mappings-----"
 nnoremap <leader>ev :e $MYVIMRC<cr>
-nnoremap <leader>ep :e ~/.vim/plugins.vim<cr>
 nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PluginInstall<CR>
 nnoremap <leader>rp :!python %<CR>
