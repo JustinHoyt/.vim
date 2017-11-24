@@ -31,22 +31,19 @@ set nocompatible              " be iMproved, required
     Plugin 'honza/vim-snippets'
     Plugin 'SirVer/ultisnips'
 
-    if has('nvim')
-	Plugin 'davidhalter/jedi'
-	Plugin 'Shougo/deoplete.nvim'
-	Plugin 'zchee/deoplete-jedi'
-	Plugin 'neomake/neomake'
-    endif
     if version >= 800
-	" experimental neovim plugins
-	" Plugin 'roxma/nvim-yarp'
-	" Plugin 'roxma/vim-hug-neovim-rpc'
-	" Plugin 'davidhalter/jedi'
-	" Plugin 'Shougo/deoplete.nvim'
-	" Plugin 'zchee/deoplete-jedi'
         Plugin 'w0rp/ale'
-	Plugin 'davidhalter/jedi-vim'
+	Plugin 'maralla/completor.vim'
+	let g:ale_fixers = {
+	\   'javascript': ['eslint'],
+	\   'python': ['autopep8'],
+	\}
+	let g:ale_linters = {
+	\   'python': ['mypy'],
+	\}
+	let g:ale_fix_on_save = 1
     endif
+
     if version < 800
         Plugin 'vim-syntastic/syntastic'
 	Plugin 'davidhalter/jedi-vim'
