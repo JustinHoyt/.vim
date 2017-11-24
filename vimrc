@@ -18,7 +18,6 @@ set nocompatible              " be iMproved, required
     Plugin 'ctrlpvim/ctrlp.vim'
     Plugin 'tpope/vim-sensible'
     Plugin 'tpope/vim-surround.git'
-    Plugin 'davidhalter/jedi-vim'
     Plugin 'ervandew/supertab'
     Plugin 'vim-airline/vim-airline'
     Plugin 'altercation/vim-colors-solarized'
@@ -32,11 +31,25 @@ set nocompatible              " be iMproved, required
     Plugin 'honza/vim-snippets'
     Plugin 'SirVer/ultisnips'
 
+    if has('nvim')
+	Plugin 'davidhalter/jedi'
+	Plugin 'Shougo/deoplete.nvim'
+	Plugin 'zchee/deoplete-jedi'
+	Plugin 'neomake/neomake'
+    endif
     if version >= 800
+	" experimental neovim plugins
+	" Plugin 'roxma/nvim-yarp'
+	" Plugin 'roxma/vim-hug-neovim-rpc'
+	" Plugin 'davidhalter/jedi'
+	" Plugin 'Shougo/deoplete.nvim'
+	" Plugin 'zchee/deoplete-jedi'
         Plugin 'w0rp/ale'
+	Plugin 'davidhalter/jedi-vim'
     endif
     if version < 800
         Plugin 'vim-syntastic/syntastic'
+	Plugin 'davidhalter/jedi-vim'
     endif
     if iCanHazVundle == 0
         echo "Installing Vundles, please ignore key map error messages"
@@ -68,6 +81,7 @@ nnoremap <leader>pt :!pytest<CR>
 nnoremap <leader>bb :b#<CR>
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>pv :!(cd ~/.vim && git pull)<CR>
+nnoremap <leader>cp :!rm -rf ~/.vim/bundle/* && git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/vundle<CR>:PluginInstall<CR>
 nnoremap <leader>in :set invnumber<CR>
 
 cmap w!! w !sudo tee > /dev/null % " Allow saving of files as sudo when I forgot to start vim using sudo
