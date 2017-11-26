@@ -29,9 +29,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'honza/vim-snippets'
     Plug 'SirVer/ultisnips'
 
-if version >= 800
+if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
-    Plug 'maralla/completor.vim'
     let g:ale_fixers = {
     \   'javascript': ['eslint'],
     \   'python': ['autopep8'],
@@ -40,6 +39,10 @@ if version >= 800
     \   'python': ['mypy'],
     \}
     let g:ale_fix_on_save = 1
+endif
+
+if version >= 800
+    Plug 'maralla/completor.vim'
 endif
 
 if version < 800
@@ -48,15 +51,9 @@ if version < 800
 endif
 
 if has('nvim')
-    Plug 'w0rp/ale'
-    let g:ale_fixers = {
-    \   'javascript': ['eslint'],
-    \   'python': ['autopep8'],
-    \}
-    let g:ale_linters = {
-    \   'python': ['mypy'],
-    \}
-    let g:ale_fix_on_save = 1
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    let g:deoplete#enable_at_startup = 1
+    Plug 'zchee/deoplete-jedi'
 endif
 
 call plug#end()
