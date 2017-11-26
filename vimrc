@@ -1,64 +1,66 @@
 set nocompatible              " be iMproved, required
-" Setting up Vundle - the vim plugin bundler
-    let iCanHazVundle=1
-    let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-    if !filereadable(vundle_readme)
-        echo "Installing Vundle.."
-        echo ""
-        silent !mkdir -p ~/.vim/bundle
-        silent !git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/vundle
-        let iCanHazVundle=0
-    endif
-    set nocompatible              " be iMproved, required
-    filetype off                  " required
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#begin()
-    Plugin 'VundleVim/Vundle.vim'
-    Plugin 'tpope/vim-vinegar'
-    Plugin 'ctrlpvim/ctrlp.vim'
-    Plugin 'tpope/vim-sensible'
-    Plugin 'tpope/vim-surround.git'
-    Plugin 'ervandew/supertab'
-    Plugin 'vim-airline/vim-airline'
-    Plugin 'altercation/vim-colors-solarized'
-    Plugin 'tpope/vim-commentary'
-    Plugin 'sheerun/vim-polyglot'
-    Plugin 'tpope/vim-repeat'
-    Plugin 'christoomey/vim-tmux-navigator'
-    Plugin 'pangloss/vim-javascript'
-    Plugin 'artur-shaik/vim-javacomplete2'
-    Plugin 'majutsushi/tagbar'
-    Plugin 'honza/vim-snippets'
-    Plugin 'SirVer/ultisnips'
+if has('nvim')
+    let s:editor_root=expand("~/.config/nvim")
+else
+    let s:editor_root=expand("~/.vim")
+endif
+" Setting up plugins
+if empty(glob(s:editor_root . '/autoload/plug.vim'))
+    autocmd VimEnter * echom "Downloading and installing vim-plug..."
+    silent execute "!curl -fLo " . s:editor_root . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    autocmd VimEnter * PlugInstall
+endif
+call plug#begin(s:editor_root . '/plugged')
+    Plug 'VundleVim/Vundle.vim'
+    Plug 'tpope/vim-vinegar'
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'tpope/vim-sensible'
+    Plug 'tpope/vim-surround'
+    Plug 'ervandew/supertab'
+    Plug 'vim-airline/vim-airline'
+    Plug 'altercation/vim-colors-solarized'
+    Plug 'tpope/vim-commentary'
+    Plug 'sheerun/vim-polyglot'
+    Plug 'tpope/vim-repeat'
+    Plug 'christoomey/vim-tmux-navigator'
+    Plug 'pangloss/vim-javascript'
+    Plug 'artur-shaik/vim-javacomplete2'
+    Plug 'majutsushi/tagbar'
+    Plug 'honza/vim-snippets'
+    Plug 'SirVer/ultisnips'
 
-    if version >= 800
-        Plugin 'w0rp/ale'
-	Plugin 'maralla/completor.vim'
-	let g:ale_fixers = {
-	\   'javascript': ['eslint'],
-	\   'python': ['autopep8'],
-	\}
-	let g:ale_linters = {
-	\   'python': ['mypy'],
-	\}
-	let g:ale_fix_on_save = 1
-    endif
+if version >= 800
+    Plug 'w0rp/ale'
+    Plug 'maralla/completor.vim'
+    let g:ale_fixers = {
+    \   'javascript': ['eslint'],
+    \   'python': ['autopep8'],
+    \}
+    let g:ale_linters = {
+    \   'python': ['mypy'],
+    \}
+    let g:ale_fix_on_save = 1
+endif
 
-    if version < 800
-        Plugin 'vim-syntastic/syntastic'
-	Plugin 'davidhalter/jedi-vim'
-    endif
-    if iCanHazVundle == 0
-        echo "Installing Vundles, please ignore key map error messages"
-        echo ""
-        :PluginInstall
-    endif
-    call vundle#end()
-    "must be last
-    filetype plugin indent on " load filetype plugins/indent settings
-    colorscheme solarized
-    syntax on                      " enable syntax
-" Setting up Vundle - the vim plugin bundler end
+if version < 800
+    Plug 'vim-syntastic/syntastic'
+    Plug 'davidhalter/jedi-vim'
+endif
+
+if has('nvim')
+    Plug 'w0rp/ale'
+    let g:ale_fixers = {
+    \   'javascript': ['eslint'],
+    \   'python': ['autopep8'],
+    \}
+    let g:ale_linters = {
+    \   'python': ['mypy'],
+    \}
+    let g:ale_fix_on_save = 1
+endif
+
+call plug#end()
+" Setting up plugins - end
 
 set number
 syntax on                     " syntax highlighting
@@ -69,15 +71,15 @@ colorscheme solarized
 let mapleader = "\<space>"
 
 "-----mappings-----"
-nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<CR>
 nnoremap <leader>rt :%retab<CR>
-nnoremap <leader>pi :PluginInstall<CR>
+nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
 nnoremap <leader>bb :b#<CR>
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>pv :!(cd ~/.vim && git pull)<CR>
-nnoremap <leader>cp :!rm -rf ~/.vim/bundle/* && git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/vundle<CR>:PluginInstall<CR>
+nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
 
 cmap w!! w !sudo tee > /dev/null % " Allow saving of files as sudo when I forgot to start vim using sudo
