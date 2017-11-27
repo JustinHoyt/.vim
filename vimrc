@@ -23,8 +23,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-repeat'
     Plug 'christoomey/vim-tmux-navigator'
-    Plug 'pangloss/vim-javascript'
-    Plug 'artur-shaik/vim-javacomplete2'
+    Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
     Plug 'majutsushi/tagbar'
     Plug 'honza/vim-snippets'
     Plug 'SirVer/ultisnips'
@@ -53,7 +52,15 @@ endif
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_debug = 1
+    let g:deoplete#enable_profile = 1
     Plug 'zchee/deoplete-jedi'
+    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern', 'for': 'javascript' }
+    Plug 'mhartington/nvim-typescript', { 'do': 'npm install -g tern', 'for': 'typescript' }
+    let g:tern_request_timeout = 1
+    let g:tern_request_timeout = 6000
+    let g:tern#command = ["tern"]
+    let g:tern#arguments = ["--persistent"]
 endif
 
 call plug#end()
