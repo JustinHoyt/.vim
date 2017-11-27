@@ -98,7 +98,11 @@ let g:UltiSnipsJumpBackwardTrigger="<leader>k"
 "-----auto-commands-----"
 augroup autosourcing
     autocmd!
-    autocmd BufWritePost ~/.vim/vimrc source %
+    if has('nvim')
+	autocmd BufWritePost ~/.config/nvim/init.vim source %
+    else
+	autocmd BufWritePost ~/.vim/vimrc source %
+    endif
 augroup END
 
 " Set location for swapfiles
