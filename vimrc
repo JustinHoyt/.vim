@@ -11,22 +11,18 @@ if empty(glob(s:editor_root . '/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall
 endif
 call plug#begin(s:editor_root . '/plugged')
-    Plug 'VundleVim/Vundle.vim'
+    Plug 'lifepillar/vim-solarized8'
     Plug 'tpope/vim-vinegar'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-surround'
     Plug 'ervandew/supertab'
-    Plug 'vim-airline/vim-airline'
-    Plug 'altercation/vim-colors-solarized'
     Plug 'tpope/vim-commentary'
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-repeat'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-    Plug 'majutsushi/tagbar'
-    Plug 'honza/vim-snippets'
-    Plug 'SirVer/ultisnips'
+    Plug 'itchyny/lightline.vim'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -70,8 +66,13 @@ set number
 syntax on                     " syntax highlighting
 set showcmd                   " show (partial) command in status line
 set shiftwidth=4
-set background=dark
-colorscheme solarized
+let hour = strftime("%H")
+if 6 <= hour && hour < 18
+    set background=light
+else
+    set background=dark
+endif
+colorscheme solarized8_flat
 let mapleader = "\<space>"
 
 "-----mappings-----"
@@ -99,8 +100,6 @@ set hidden		      " This allows buffers to be hidden if you've modified a buffer
 nnoremap <leader>t :enew<cr>  " To open a new empty buffer
 nnoremap <S-l> :bnext<CR>     " Move to the next buffer
 nnoremap <S-h> :bprevious<CR> " Move to the previous buffer
-let g:UltiSnipsJumpForwardTrigger="<leader>j"
-let g:UltiSnipsJumpBackwardTrigger="<leader>k"
 
 "-----auto-commands-----"
 augroup autosourcing
@@ -116,12 +115,6 @@ augroup END
 set directory=$HOME/.vim/swap//
 set backupdir=$HOME/.vim/backup//
 set undodir=$HOME/.vim/undo//
-
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:ctrlp_max_files=0 
 " Ignore these directories
