@@ -62,18 +62,15 @@ endif
 call plug#end()
 " Setting up plugins - end
 
-set number
-syntax on                     " syntax highlighting
-set showcmd                   " show (partial) command in status line
 set shiftwidth=4
+colorscheme solarized8_flat
+let mapleader = "\<space>"
 let hour = strftime("%H")
 if 6 <= hour && hour < 18
     set background=light
 else
     set background=dark
 endif
-colorscheme solarized8_flat
-let mapleader = "\<space>"
 
 "-----mappings-----"
 nnoremap <leader>ev :e $MYVIMRC<CR>
@@ -86,6 +83,10 @@ nnoremap <leader>bd :bd<CR>
 nnoremap <leader>pv :!(cd ~/.vim && git pull)<CR>
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
+nnoremap <leader>nh :noh<CR>
+nnoremap <leader>w :w<CR>
+nnoremap Y y$
+:imap jk <Esc>
 
 cmap w!! w !sudo tee > /dev/null % " Allow saving of files as sudo when I forgot to start vim using sudo
 set pastetoggle=<leader>pp
