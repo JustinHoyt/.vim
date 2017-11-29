@@ -11,7 +11,7 @@ if empty(glob(s:editor_root . '/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall
 endif
 call plug#begin(s:editor_root . '/plugged')
-    Plug 'lifepillar/vim-solarized8'
+    Plug 'altercation/vim-colors-solarized'
     Plug 'tpope/vim-vinegar'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tpope/vim-sensible'
@@ -62,15 +62,12 @@ endif
 call plug#end()
 " Setting up plugins - end
 
+syntax enable
 set shiftwidth=4
-colorscheme solarized8_flat
+set background=dark
+colorscheme solarized
 let mapleader = "\<space>"
 let hour = strftime("%H")
-if 6 <= hour && hour < 18
-    set background=light
-else
-    set background=dark
-endif
 
 "-----mappings-----"
 nnoremap <leader>ev :e $MYVIMRC<CR>
