@@ -82,6 +82,8 @@ nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
 nnoremap <leader>nh :noh<CR>
 nnoremap <leader>w :w<CR>
+nnoremap <leader>wq :wq<CR>
+nnoremap <leader>q :q<CR>
 nnoremap Y y$
 :imap jk <Esc>
 
