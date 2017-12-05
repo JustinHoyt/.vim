@@ -82,7 +82,6 @@ nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
 nnoremap <leader>nh :noh<CR>
 nnoremap <leader>w :w<CR>
-nnoremap <leader>wq :wq<CR>
 nnoremap <leader>q :q<CR>
 nnoremap Y y$
 :imap jk <Esc>
@@ -98,8 +97,8 @@ nnoremap <C-=> <C-W><C-=>
 " buffer mappings
 set hidden		      " This allows buffers to be hidden if you've modified a buffer
 nnoremap <leader>t :enew<cr>  " To open a new empty buffer
-nnoremap <S-l> :bnext<CR>     " Move to the next buffer
-nnoremap <S-h> :bprevious<CR> " Move to the previous buffer
+nnoremap <leader>l :bn<CR>     " Move to the next buffer
+nnoremap <leader>h :bp<CR> " Move to the previous buffer
 
 "-----auto-commands-----"
 augroup autosourcing
