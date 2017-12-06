@@ -77,7 +77,7 @@ nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
 nnoremap <leader>bb :b#<CR>
 nnoremap <leader>bd :bd<CR>
-nnoremap <leader>pv :!(cd ~/.vim && git pull)<CR>
+nnoremap <leader>pv :!(cd ~/.vim && git reset HEAD --hard && git pull)<CR>
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
 nnoremap <leader>nh :noh<CR>
