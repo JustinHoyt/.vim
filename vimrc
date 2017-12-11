@@ -75,6 +75,7 @@ nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
+inoremap <leader>fd '${:,.2f}'.format(
 nnoremap <leader>bb :b#<CR>
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>pv :!(cd ~/.vim && git reset HEAD --hard && git pull)<CR>
