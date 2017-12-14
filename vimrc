@@ -22,7 +22,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-repeat'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-    Plug 'itchyny/lightline.vim'
+    Plug 'vim-airline/vim-airline'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -75,7 +75,6 @@ nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
-inoremap <leader>fd '${:,.2f}'.format(
 nnoremap <leader>bb :b#<CR>
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>pv :!(cd ~/.vim && git reset HEAD --hard && git pull)<CR>
@@ -86,6 +85,13 @@ nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap Y y$
 :imap jk <Esc>
+if has('nvim')
+    " maps terminal window movements to emulate normal vim keybindings
+    tnoremap <C-h> <c-\><c-n><c-w>h
+    tnoremap <C-j> <c-\><c-n><c-w>j
+    tnoremap <C-k> <c-\><c-n><c-w>k
+    tnoremap <C-l> <c-\><c-n><c-w>l
+endif
 
 cmap w!! w !sudo tee > /dev/null % " Allow saving of files as sudo when I forgot to start vim using sudo
 set pastetoggle=<leader>pp
@@ -124,3 +130,11 @@ set wildignore+=*/node_modules/**
 " disable caching
 let g:ctrlp_use_caching=0
 let g:ctrlp_max_depth=40
+
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" put abbreviations at the end
+inoremap \dlr '${:,.2f}'.format()<esc>i
+:iabbrev dlr '${:,.2f}'.format(
