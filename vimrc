@@ -103,9 +103,12 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
 " buffer mappings
 set hidden		      " This allows buffers to be hidden if you've modified a buffer
-nnoremap <leader>t :enew<cr>  " To open a new empty buffer
-nnoremap <leader>l :bn<CR>     " Move to the next buffer
-nnoremap <leader>h :bp<CR> " Move to the previous buffer
+nnoremap <M-n> :enew<cr>  " To open a new empty buffer
+nnoremap <M-t> :terminal<cr>  " To open a new terminal
+nnoremap <M-l> :bn<CR>     " Move to the next buffer
+nnoremap <M-h> :bp<CR> " Move to the previous buffer
+nnoremap <M-x> :bd<CR>
+nnoremap <M-b> :b#<CR>
 
 "-----auto-commands-----"
 augroup autosourcing
@@ -138,3 +141,5 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " put abbreviations at the end
 inoremap \dlr '${:,.2f}'.format()<esc>i
 :iabbrev dlr '${:,.2f}'.format(
+nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
