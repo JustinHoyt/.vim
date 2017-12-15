@@ -23,6 +23,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
     Plug 'vim-airline/vim-airline'
+    Plug 'idanarye/vim-vebugger'
+    Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -65,6 +67,7 @@ call plug#end()
 syntax enable
 set shiftwidth=4
 set background=dark
+let g:vebugger_leader=','
 colorscheme solarized
 let mapleader = "\<space>"
 let hour = strftime("%H")
@@ -91,7 +94,17 @@ if has('nvim')
     tnoremap <C-j> <c-\><c-n><c-w>j
     tnoremap <C-k> <c-\><c-n><c-w>k
     tnoremap <C-l> <c-\><c-n><c-w>l
+    tnoremap <M-n> <c-\><c-n>:enew<cr>  " To open a new empty buffer
+    tnoremap <M-t> <c-\><c-n>:terminal<cr>  " To open a new terminal
+    tnoremap <M-l> <c-\><c-n>:bn<CR>     " Move to the next buffer
+    tnoremap <M-h> <c-\><c-n>:bp<CR> " Move to the previous buffer
+    tnoremap <M-d> <c-\><c-n>:bd<CR>
+    tnoremap <M-b> <c-\><c-n>:b#<CR>
 endif
+
+" mappings for vebugger
+nnoremap ,k :VBGkill<CR>
+nnoremap ,s :VBGstartPDB %<CR>
 
 cmap w!! w !sudo tee > /dev/null % " Allow saving of files as sudo when I forgot to start vim using sudo
 set pastetoggle=<leader>pp
@@ -107,7 +120,7 @@ nnoremap <M-n> :enew<cr>  " To open a new empty buffer
 nnoremap <M-t> :terminal<cr>  " To open a new terminal
 nnoremap <M-l> :bn<CR>     " Move to the next buffer
 nnoremap <M-h> :bp<CR> " Move to the previous buffer
-nnoremap <M-x> :bd<CR>
+nnoremap <M-d> :bd<CR>
 nnoremap <M-b> :b#<CR>
 
 "-----auto-commands-----"
