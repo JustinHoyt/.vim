@@ -26,6 +26,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'idanarye/vim-vebugger'
     Plug 'Shougo/vimproc.vim', {'do' : 'make'}
     Plug 'davidhalter/jedi-vim'
+    Plug 'machakann/vim-highlightedyank'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -49,7 +50,12 @@ if version < 800
     Plug 'vim-syntastic/syntastic'
 endif
 
+if !has('nvim')
+    map y <Plug>(highlightedyank)
+endif
+
 if has('nvim')
+    set inccommand=nosplit
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#enable_debug = 1
@@ -82,12 +88,15 @@ nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
 nnoremap <leader>bb :b#<CR>
 nnoremap <leader>bd :bd<CR>
-nnoremap <leader>pv :!(cd ~/.vim && git reset HEAD --hard && git pull)<CR>
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
 nnoremap <leader>nh :noh<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
+" pulls vim changes from git
+nnoremap <leader>pv :!(cd ~/.vim && git reset HEAD --hard && git pull)<CR>
+" Renames word selected accross the file
+nnoremap <leader>rn :%s/\<<c-r><c-w>\>/
 nnoremap Y y$
 :imap jk <Esc>
 if has('nvim')
