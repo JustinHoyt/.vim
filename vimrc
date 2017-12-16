@@ -25,7 +25,6 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'vim-airline/vim-airline'
     Plug 'idanarye/vim-vebugger'
     Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-    Plug 'davidhalter/jedi-vim'
     Plug 'machakann/vim-highlightedyank'
 
 if version >= 800 || has('nvim')
@@ -38,8 +37,6 @@ if version >= 800 || has('nvim')
     \   'python': ['mypy'],
     \}
     let g:ale_fix_on_save = 1
-    " jedi-vim is for refactoring capabilities only
-    let g:jedi#completions_enabled = 0
 endif
 
 if version >= 800
@@ -48,6 +45,7 @@ endif
 
 if version < 800
     Plug 'vim-syntastic/syntastic'
+    Plug 'davidhalter/jedi-vim'
 endif
 
 if !has('nvim')
