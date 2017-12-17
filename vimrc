@@ -26,6 +26,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'idanarye/vim-vebugger'
     Plug 'Shougo/vimproc.vim', {'do' : 'make'}
     Plug 'machakann/vim-highlightedyank'
+    Plug 'tpope/vim-unimpaired'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -131,6 +132,13 @@ nnoremap <M-l> :bn<CR>     " Move to the next buffer
 nnoremap <M-h> :bp<CR> " Move to the previous buffer
 nnoremap <M-d> :bd<CR>
 nnoremap <M-b> :b#<CR>
+" unimpaired mappings
+" Bubble single lines
+nmap <M-k> [e
+nmap <M-j> ]e
+" Bubble multiple lines
+vmap <M-k> [egv
+vmap <M-j> ]egv
 
 "-----auto-commands-----"
 augroup autosourcing
