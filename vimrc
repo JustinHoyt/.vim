@@ -12,21 +12,20 @@ if empty(glob(s:editor_root . '/autoload/plug.vim'))
 endif
 call plug#begin(s:editor_root . '/plugged')
     Plug 'altercation/vim-colors-solarized'
-    Plug 'tpope/vim-vinegar'
+    Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
+    Plug 'christoomey/vim-tmux-navigator'
     Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'ervandew/supertab'
+    Plug 'idanarye/vim-vebugger'
+    Plug 'sheerun/vim-polyglot'
+    Plug 'shougo/vimproc.vim', {'do' : 'make'}
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-surround'
-    Plug 'ervandew/supertab'
-    Plug 'tpope/vim-commentary'
-    Plug 'sheerun/vim-polyglot'
-    Plug 'tpope/vim-repeat'
-    Plug 'christoomey/vim-tmux-navigator'
-    Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-    Plug 'vim-airline/vim-airline'
-    Plug 'idanarye/vim-vebugger'
-    Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-    Plug 'machakann/vim-highlightedyank'
     Plug 'tpope/vim-unimpaired'
+    Plug 'tpope/vim-vinegar'
+    Plug 'vim-airline/vim-airline'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -47,10 +46,6 @@ endif
 if version < 800
     Plug 'vim-syntastic/syntastic'
     Plug 'davidhalter/jedi-vim'
-endif
-
-if !has('nvim')
-    map y <Plug>(highlightedyank)
 endif
 
 if has('nvim')
@@ -77,7 +72,6 @@ set background=dark
 let g:vebugger_leader=','
 colorscheme solarized
 let mapleader = "\<space>"
-let hour = strftime("%H")
 
 "-----mappings-----"
 nnoremap <leader>ev :e $MYVIMRC<CR>
@@ -85,8 +79,10 @@ nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
-nnoremap <leader>bb :b#<CR>
-nnoremap <leader>bd :bd<CR>
+nnoremap <leader>b :b#<CR>
+nnoremap <leader>l :bn<CR>     " Move to the next buffer
+nnoremap <leader>h :bp<CR>     " Move to the previous buffer
+nnoremap <leader>d :bd<CR>
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
 nnoremap <leader>nh :noh<CR>
@@ -113,6 +109,7 @@ if has('nvim')
 endif
 
 " mappings for vebugger
+" ':help vebugger-keymaps' for more
 nnoremap ,k :VBGkill<CR>
 nnoremap ,s :VBGstartPDB %<CR>
 
