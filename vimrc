@@ -67,6 +67,7 @@ call plug#end()
 " Setting up plugins - end
 
 syntax enable
+set hlsearch
 set shiftwidth=4
 set background=dark
 let g:vebugger_leader=','
@@ -169,4 +170,3 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 inoremap \dlr '${:,.2f}'.format()<esc>i
 :iabbrev dlr '${:,.2f}'.format(
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
