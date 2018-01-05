@@ -26,6 +26,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-unimpaired'
     Plug 'tpope/vim-vinegar'
     Plug 'vim-airline/vim-airline'
+    Plug 'jiangmiao/auto-pairs'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
