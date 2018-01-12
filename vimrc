@@ -27,12 +27,15 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-vinegar'
     Plug 'vim-airline/vim-airline'
     Plug 'jiangmiao/auto-pairs'
+    Plug 'artur-shaik/vim-javacomplete2'
+    Plug 'airblade/vim-rooter'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
     let g:ale_fixers = {
     \   'javascript': ['eslint'],
     \   'python': ['autopep8'],
+    \   'java': [''],
     \}
     let g:ale_linters = {
     \   'python': ['mypy'],
