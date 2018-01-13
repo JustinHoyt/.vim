@@ -29,6 +29,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'jiangmiao/auto-pairs'
     Plug 'artur-shaik/vim-javacomplete2'
     Plug 'airblade/vim-rooter'
+    Plug 'rking/ag.vim'
+    Plug 'skwp/greplace.vim'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -174,3 +176,6 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 inoremap \dlr '${:,.2f}'.format()<esc>i
 :iabbrev dlr '${:,.2f}'.format(
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
+
+set grepprg=ag
+let g:grep_cmd_opts = '--line-numbers --noheading'
