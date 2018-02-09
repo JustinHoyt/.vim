@@ -1,15 +1,26 @@
+if has('windows')
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+endif
+
 set nocompatible              " be iMproved, required
 if has('nvim')
     let s:editor_root=expand("~/.config/nvim")
+elseif has('windows')
+    let s:editor_root=expand("~/vimfiles")
 else
     let s:editor_root=expand("~/.vim")
 endif
-" Setting up plugins
-if empty(glob(s:editor_root . '/autoload/plug.vim'))
-    autocmd VimEnter * echom "Downloading and installing vim-plug..."
-    silent execute "!curl -fLo " . s:editor_root . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    autocmd VimEnter * PlugInstall
+
+if has('unix')
+    " Setting up plugins
+    if empty(glob(s:editor_root . '/autoload/plug.vim'))
+	autocmd VimEnter * echom "Downloading and installing vim-plug..."
+	silent execute "!curl -fLo " . s:editor_root . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+	autocmd VimEnter * PlugInstall
+    endif
 endif
+
 call plug#begin(s:editor_root . '/plugged')
     Plug 'altercation/vim-colors-solarized'
     Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
@@ -18,7 +29,6 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'ervandew/supertab'
     Plug 'idanarye/vim-vebugger'
     Plug 'sheerun/vim-polyglot'
-    Plug 'shougo/vimproc.vim', {'do' : 'make'}
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-sensible'
@@ -46,7 +56,9 @@ if version >= 800 || has('nvim')
 endif
 
 if version >= 800
-    Plug 'maralla/completor.vim'
+    if has('unix')
+	Plug 'maralla/completor.vim'
+    endif
 endif
 
 if version < 800
@@ -77,7 +89,9 @@ set hlsearch
 set shiftwidth=4
 set background=dark
 let g:vebugger_leader=','
-colorscheme solarized
+if has('unix')
+    colorscheme solarized
+endif
 let mapleader = "\<space>"
 
 "-----mappings-----"
@@ -179,3 +193,35 @@ nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
 
 set grepprg=ag
 let g:grep_cmd_opts = '--line-numbers --noheading'
+
+if has('windows')
+    set diffexpr=MyDiff()
+endif
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      if empty(&shellxquote)
+        let l:shxq_sav = ''
+        set shellxquote&
+      endif
+      let cmd = '"' . $VIMRUNTIME . '\diff"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+  if exists('l:shxq_sav')
+    let &shellxquote=l:shxq_sav
+  endif
+endfunction
