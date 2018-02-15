@@ -171,13 +171,6 @@ augroup autosourcing
     endif
 augroup END
 
-" Set location for swapfiles
-if has('unix')
-    set directory=$HOME/.vim/swap//
-    set backupdir=$HOME/.vim/backup//
-    set undodir=$HOME/.vim/undo//
-endif
-
 let g:ctrlp_max_files=0 
 " Ignore these directories
 set wildignore+=*/build/**
