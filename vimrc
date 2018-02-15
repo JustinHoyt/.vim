@@ -1,12 +1,14 @@
 set nocompatible              " be iMproved, required
-if has('nvim')
-    let s:editor_root=expand("~/.config/nvim")
-elseif has('windows')
+if has('windows')
     let s:editor_root=expand("~/vimfiles")
     set shell=powershell 
     set shellcmdflag=-command
-else
+endif
+if has('unix')
     let s:editor_root=expand("~/.vim")
+endif
+if has('nvim')
+    let s:editor_root=expand("~/.config/nvim")
 endif
 
 " Setting up plugins
