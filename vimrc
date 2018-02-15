@@ -1,24 +1,24 @@
-if has('windows')
-    source $VIMRUNTIME/mswin.vim
-    behave mswin
-endif
-
 set nocompatible              " be iMproved, required
 if has('nvim')
     let s:editor_root=expand("~/.config/nvim")
 elseif has('windows')
     let s:editor_root=expand("~/vimfiles")
+    set shell=powershell 
+    set shellcmdflag=-command
 else
     let s:editor_root=expand("~/.vim")
 endif
 
-if has('unix')
-    " Setting up plugins
-    if empty(glob(s:editor_root . '/autoload/plug.vim'))
-	autocmd VimEnter * echom "Downloading and installing vim-plug..."
+" Setting up plugins
+if empty(glob(s:editor_root . '/autoload/plug.vim'))
+    autocmd VimEnter * echom "Downloading and installing vim-plug..."
+    if has('unix')
 	silent execute "!curl -fLo " . s:editor_root . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-	autocmd VimEnter * PlugInstall
+    elseif has('windows')
+	silent execute '!New-Item -ItemType Directory -Force -Path ' . s:editor_root . '/autoload'
+	silent execute '!Invoke-WebRequest -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" -OutFile "' . s:editor_root . '/autoload/plug.vim"'
     endif
+    autocmd VimEnter * PlugInstall
 endif
 
 call plug#begin(s:editor_root . '/plugged')
@@ -90,6 +90,9 @@ set shiftwidth=4
 set background=dark
 let g:vebugger_leader=','
 if has('unix')
+    colorscheme solarized
+endif
+if has("gui_running")
     colorscheme solarized
 endif
 let mapleader = "\<space>"
@@ -169,9 +172,11 @@ augroup autosourcing
 augroup END
 
 " Set location for swapfiles
-set directory=$HOME/.vim/swap//
-set backupdir=$HOME/.vim/backup//
-set undodir=$HOME/.vim/undo//
+if has('unix')
+    set directory=$HOME/.vim/swap//
+    set backupdir=$HOME/.vim/backup//
+    set undodir=$HOME/.vim/undo//
+endif
 
 let g:ctrlp_max_files=0 
 " Ignore these directories
@@ -194,34 +199,14 @@ nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
 set grepprg=ag
 let g:grep_cmd_opts = '--line-numbers --noheading'
 
+" Set colors in windows console
 if has('windows')
-    set diffexpr=MyDiff()
-endif
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      if empty(&shellxquote)
-        let l:shxq_sav = ''
-        set shellxquote&
-      endif
-      let cmd = '"' . $VIMRUNTIME . '\diff"'
-    else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    if !has("gui_running")
+	set term=xterm
+	set t_Co=256
+	let &t_AB="\e[48;5;%dm"
+	let &t_AF="\e[38;5;%dm"
+	inoremap <Char-0x07F> <BS>
+	nnoremap <Char-0x07F> <BS>
     endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-  if exists('l:shxq_sav')
-    let &shellxquote=l:shxq_sav
-  endif
-endfunction
+endif
