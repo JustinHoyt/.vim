@@ -14,7 +14,7 @@ if empty(glob(s:editor_root . '/autoload/plug.vim'))
     autocmd VimEnter * echom "Downloading and installing vim-plug..."
     if has('unix')
 	silent execute "!curl -fLo " . s:editor_root . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    elseif has('windows')
+    elseif has('win32')
 	silent execute '!New-Item -ItemType Directory -Force -Path ' . s:editor_root . '/autoload'
 	silent execute '!Invoke-WebRequest -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" -OutFile "' . s:editor_root . '/autoload/plug.vim"'
     endif
@@ -193,7 +193,7 @@ set grepprg=ag
 let g:grep_cmd_opts = '--line-numbers --noheading'
 
 " Set colors in windows console
-if has('windows')
+if has('win32')
     if !has("gui_running")
 	set term=xterm
 	set t_Co=256
