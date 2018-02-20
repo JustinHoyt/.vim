@@ -41,6 +41,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'airblade/vim-rooter'
     Plug 'rking/ag.vim'
     Plug 'skwp/greplace.vim'
+    Plug 'leafgarland/typescript-vim'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -56,9 +57,8 @@ if version >= 800 || has('nvim')
 endif
 
 if version >= 800
-    if has('unix')
-	Plug 'maralla/completor.vim'
-    endif
+    Plug 'maralla/completor.vim'
+    Plug 'maralla/completor-typescript'
 endif
 
 if version < 800
@@ -166,8 +166,10 @@ augroup autosourcing
     autocmd!
     if has('nvim')
 	autocmd BufWritePost ~/.config/nvim/init.vim source %
-    else
+    elseif has('unix')
 	autocmd BufWritePost ~/.vim/vimrc source %
+    elseif has('win32')
+	autocmd BufWritePost ~/vimfiles/vimrc source %
     endif
 augroup END
 
