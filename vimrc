@@ -165,13 +165,12 @@ vmap <M-j> ]egv
 augroup autosourcing
     autocmd!
     if has('nvim')
-	autocmd BufWritePost ~/.config/nvim/init.vim source %
-    elseif has('unix')
-	autocmd BufWritePost ~/.vim/vimrc source %
-    elseif has('win32')
-	autocmd BufWritePost ~/vimfiles/vimrc source %
+	autocmd BufWritePost vimrc execute "source " . s:editor_root . "/init.vim"
+    else
+	autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
     endif
 augroup END
+
 
 let g:ctrlp_max_files=0 
 " Ignore these directories
