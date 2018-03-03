@@ -1,3 +1,11 @@
+" --- Newly Learned Vim Features ---
+"
+" ~: changes case of the letter you're over
+"
+" <visual> o: alternates cursor position of highlighed text
+"
+" <C-A> and <C-X>: increments and decrements the next number on the line,
+" respectively
 set nocompatible              " be iMproved, required
 if has('nvim')
     let s:editor_root=expand("~/.config/nvim")
