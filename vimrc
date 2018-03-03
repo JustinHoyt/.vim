@@ -23,7 +23,6 @@ endif
 
 call plug#begin(s:editor_root . '/plugged')
     Plug 'altercation/vim-colors-solarized'
-    Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'ervandew/supertab'
@@ -37,8 +36,6 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-vinegar'
     Plug 'vim-airline/vim-airline'
     Plug 'jiangmiao/auto-pairs'
-    Plug 'artur-shaik/vim-javacomplete2'
-    Plug 'airblade/vim-rooter'
     Plug 'rking/ag.vim'
     Plug 'skwp/greplace.vim'
     Plug 'leafgarland/typescript-vim'
