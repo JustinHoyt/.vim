@@ -42,6 +42,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'rking/ag.vim'
     Plug 'skwp/greplace.vim'
     Plug 'leafgarland/typescript-vim'
+    Plug 'junegunn/vim-peekaboo'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
