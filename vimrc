@@ -51,6 +51,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'skwp/greplace.vim'
     Plug 'leafgarland/typescript-vim'
     Plug 'junegunn/vim-peekaboo'
+    Plug 'tpope/vim-fugitive'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -107,7 +108,7 @@ endif
 let mapleader = "\<space>"
 
 "-----mappings-----"
-nnoremap <leader>ev :e $MYVIMRC<CR>
+nnoremap <leader>ev :silent e $MYVIMRC<CR>
 nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :!python %<CR>
