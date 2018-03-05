@@ -49,6 +49,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'leafgarland/typescript-vim'
     Plug 'junegunn/vim-peekaboo'
     Plug 'tpope/vim-fugitive'
+    Plug 'terryma/vim-multiple-cursors'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -211,3 +212,13 @@ if has('win32')
 	nnoremap <Char-0x07F> <BS>
     endif
 endif
+
+let g:multi_cursor_use_default_mapping=0
+
+" Default mapping
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<C-c>'
+nnoremap <C-c> :call multiple_cursors#quit()<CR>
+
