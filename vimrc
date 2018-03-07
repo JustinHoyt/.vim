@@ -121,7 +121,11 @@ nnoremap <leader>nh :noh<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 " pulls vim changes from git
-nnoremap <leader>pv :!(cd ~/.vim && git reset HEAD --hard && git pull)<CR>
+if has('unix')
+    nnoremap <leader>pv :!(cd ~/.vim && git reset HEAD --hard && git pull)<CR>
+elseif has ('win32')
+    nnoremap <leader>pv :!cd ~/vimfiles; git reset HEAD --hard; git pull<CR>
+endif
 " Renames word selected accross the file
 nnoremap <leader>rn :%s/\<<c-r><c-w>\>/
 nnoremap Y y$
