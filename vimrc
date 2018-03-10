@@ -96,6 +96,9 @@ syntax enable
 set hlsearch
 set shiftwidth=4
 set background=dark
+set ignorecase
+set smartcase
+
 let g:vebugger_leader=','
 if has('unix')
     colorscheme solarized
