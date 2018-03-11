@@ -6,6 +6,9 @@
 "
 " <C-A> and <C-X>: increments and decrements the next number on the line,
 " respectively
+"
+" Test the speed of vim on startup by
+" rm -f vim.log && vim --startuptime vim.log +q && tail -n 1 vim.log | cut -f1 -d' '
 set nocompatible              " be iMproved, required
 if has('nvim')
     let s:editor_root=expand("~/.config/nvim")
@@ -42,7 +45,6 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-unimpaired'
     Plug 'tpope/vim-vinegar'
-    Plug 'vim-airline/vim-airline'
     Plug 'jiangmiao/auto-pairs'
     Plug 'rking/ag.vim'
     Plug 'skwp/greplace.vim'
@@ -50,6 +52,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'junegunn/vim-peekaboo'
     Plug 'tpope/vim-fugitive'
     Plug 'terryma/vim-multiple-cursors'
+    Plug 'itchyny/lightline.vim'
 
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
@@ -115,8 +118,10 @@ nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
 nnoremap <leader>b :b#<CR>
-nnoremap <leader>l :bn<CR>     " Move to the next buffer
-nnoremap <leader>h :bp<CR>     " Move to the previous buffer
+" nnoremap <leader>l :bn<CR>     " Move to the next buffer
+" nnoremap <leader>h :bp<CR>     " Move to the previous buffer
+nnoremap <S-j> :bp<CR>
+nnoremap <S-k> :bn<CR>
 nnoremap <leader>d :bd<CR>
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
@@ -196,10 +201,6 @@ set wildignore+=*/node_modules/**
 let g:ctrlp_use_caching=0
 let g:ctrlp_max_depth=40
 
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-
 " put abbreviations at the end
 inoremap \dlr '${:,.2f}'.format()<esc>i
 :iabbrev dlr '${:,.2f}'.format(
@@ -228,4 +229,3 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<C-c>'
 nnoremap <C-c> :call multiple_cursors#quit()<CR>
-
