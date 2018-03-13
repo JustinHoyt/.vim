@@ -1,7 +1,4 @@
 " --- Newly Learned Vim Features ---
-"
-" ~: changes case of the letter you're over
-"
 " <visual> o: alternates cursor position of highlighed text
 "
 " <C-A> and <C-X>: increments and decrements the next number on the line,
@@ -53,7 +50,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-fugitive'
     Plug 'terryma/vim-multiple-cursors'
     Plug 'itchyny/lightline.vim'
-
+    Plug 'mgee/lightline-bufferline'
+    
 if version >= 800 || has('nvim')
     Plug 'w0rp/ale'
     let g:ale_fixers = {
@@ -118,10 +116,9 @@ nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
 nnoremap <leader>b :b#<CR>
-" nnoremap <leader>l :bn<CR>     " Move to the next buffer
-" nnoremap <leader>h :bp<CR>     " Move to the previous buffer
-nnoremap <S-j> :bp<CR>
-nnoremap <S-k> :bn<CR>
+nnoremap <leader>l :bn<CR>     " Move to the next buffer
+nnoremap <leader>h :bp<CR>     " Move to the previous buffer
+nnoremap <C-c> "+y
 nnoremap <leader>d :bd<CR>
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
@@ -227,5 +224,17 @@ let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<C-c>'
-nnoremap <C-c> :call multiple_cursors#quit()<CR>
+let g:multi_cursor_quit_key='<C-x>'
+nnoremap <C-x> :call multiple_cursors#quit()<CR>
+
+let g:lightline#bufferline#shorten_path = 0
+let g:lightline#bufferline#unnamed      = '[No Name]'
+
+let g:lightline = {}
+let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type   = {'buffers': 'tabsel'}
+let g:lightline.colorscheme = 'solarized'
+set noshowmode
+set showtabline=2
+
