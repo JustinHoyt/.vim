@@ -119,6 +119,7 @@ nnoremap <leader>b :b#<CR>
 nnoremap <leader>l :bn<CR>     " Move to the next buffer
 nnoremap <leader>h :bp<CR>     " Move to the previous buffer
 nnoremap <C-c> "+y
+vnoremap <C-c> "+y
 nnoremap <leader>d :bd<CR>
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>in :set invnumber<CR>
