@@ -211,13 +211,15 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 
 " Set colors in windows console
 if has('win32')
-    if !has("gui_running")
-	set term=xterm
-	set t_Co=256
-	let &t_AB="\e[48;5;%dm"
-	let &t_AF="\e[38;5;%dm"
-	inoremap <Char-0x07F> <BS>
-	nnoremap <Char-0x07F> <BS>
+    if stridx(&shell, 'posh')!=-1
+	if !has("gui_running")
+	    set term=xterm
+	    set t_Co=256
+	    let &t_AB="\e[48;5;%dm"
+	    let &t_AF="\e[38;5;%dm"
+	    inoremap <Char-0x07F> <BS>
+	    nnoremap <Char-0x07F> <BS>
+	endif
     endif
 endif
 
