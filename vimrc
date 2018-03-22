@@ -1,11 +1,11 @@
-" --- Newly Learned Vim Features ---
+"-----Newly Learned Vim Features-----"
 " <visual> o: alternates cursor position of highlighed text
 "
-" <C-A> and <C-X>: increments and decrements the next number on the line,
-" respectively
 "
-" Test the speed of vim on startup by
+"-----Test the speed of vim on startup on unix and windows, respectively-----"
 " rm -f vim.log && vim --startuptime vim.log +q && tail -n 1 vim.log | cut -f1 -d' '
+" rm -force -ErrorAction Ignore vim.log; vim --startuptime vim.log +q; tail -n 1 vim.log | cut -f1 -d' '
+
 set nocompatible              " be iMproved, required
 if has('nvim')
     let s:editor_root=expand("~/.config/nvim")
