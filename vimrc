@@ -30,16 +30,19 @@ if empty(glob(s:editor_root . '/autoload/plug.vim'))
 endif
 
 call plug#begin(s:editor_root . '/plugged')
-    Plug 'altercation/vim-colors-solarized'
-    Plug 'christoomey/vim-tmux-navigator'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'ervandew/supertab'
-    Plug 'idanarye/vim-vebugger'
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-surround'
+    Plug 'itchyny/lightline.vim'
+
+if has('unix')
+    Plug 'altercation/vim-colors-solarized'
+    Plug 'christoomey/vim-tmux-navigator'
+    Plug 'idanarye/vim-vebugger'
+    Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-unimpaired'
     Plug 'tpope/vim-vinegar'
     Plug 'jiangmiao/auto-pairs'
@@ -49,10 +52,10 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'junegunn/vim-peekaboo'
     Plug 'tpope/vim-fugitive'
     Plug 'terryma/vim-multiple-cursors'
-    Plug 'itchyny/lightline.vim'
     Plug 'mgee/lightline-bufferline'
+endif
     
-if version >= 800 || has('nvim')
+if (version >= 800 || has('nvim')) && has('unix') 
     Plug 'w0rp/ale'
     let g:ale_fixers = {
     \   'javascript': ['eslint'],
@@ -65,12 +68,12 @@ if version >= 800 || has('nvim')
     let g:ale_fix_on_save = 1
 endif
 
-if version >= 800
+if version >= 800 && has('unix')
     Plug 'maralla/completor.vim'
     Plug 'maralla/completor-typescript'
 endif
 
-if version < 800
+if version < 800 && has('unix')
     Plug 'vim-syntastic/syntastic'
     Plug 'davidhalter/jedi-vim'
 endif
@@ -211,15 +214,13 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 
 " Set colors in windows console
 if has('win32')
-    if stridx(&shell, 'posh')!=-1
-	if !has("gui_running")
-	    set term=xterm
-	    set t_Co=256
-	    let &t_AB="\e[48;5;%dm"
-	    let &t_AF="\e[38;5;%dm"
-	    inoremap <Char-0x07F> <BS>
-	    nnoremap <Char-0x07F> <BS>
-	endif
+    if !has("gui_running")
+	set term=xterm
+	set t_Co=256
+	let &t_AB="\e[48;5;%dm"
+	let &t_AF="\e[38;5;%dm"
+	inoremap <Char-0x07F> <BS>
+	nnoremap <Char-0x07F> <BS>
     endif
 endif
 
