@@ -4,3 +4,4 @@ autoload/
 plugged/
 bundle/**
 .netrwhist
+vim.log
