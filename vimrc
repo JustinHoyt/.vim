@@ -37,6 +37,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-surround'
     Plug 'itchyny/lightline.vim'
+    Plug 'vimwiki/vimwiki'
 
 if has('unix')
     Plug 'altercation/vim-colors-solarized'
