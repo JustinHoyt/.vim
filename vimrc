@@ -40,6 +40,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'vimwiki/vimwiki'
     Plug 'tpope/vim-vinegar'
     Plug 'tpope/vim-repeat'
+    Plug 'mhinz/vim-startify'
 
 if has('unix')
     Plug 'altercation/vim-colors-solarized'
