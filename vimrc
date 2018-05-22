@@ -38,14 +38,14 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-surround'
     Plug 'itchyny/lightline.vim'
     Plug 'vimwiki/vimwiki'
+    Plug 'tpope/vim-vinegar'
+    Plug 'tpope/vim-repeat'
 
 if has('unix')
     Plug 'altercation/vim-colors-solarized'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'idanarye/vim-vebugger'
-    Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-unimpaired'
-    Plug 'tpope/vim-vinegar'
     Plug 'jiangmiao/auto-pairs'
     Plug 'rking/ag.vim'
     Plug 'skwp/greplace.vim'
