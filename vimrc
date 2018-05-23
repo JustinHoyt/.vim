@@ -134,6 +134,7 @@ nnoremap <leader>nh :noh<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
+nnoremap <leader>s :Startify<CR>
 
 " pulls vim changes from git
 if has('unix')
