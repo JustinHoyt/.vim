@@ -133,6 +133,7 @@ nnoremap <leader>in :set invnumber<CR>
 nnoremap <leader>nh :noh<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
+nnoremap <Esc> :noh<CR>
 " pulls vim changes from git
 if has('unix')
     nnoremap <leader>pv :!(cd ~/.vim && git reset HEAD --hard && git pull)<CR>
