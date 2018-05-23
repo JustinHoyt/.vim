@@ -133,14 +133,8 @@ nnoremap <leader>in :set invnumber<CR>
 nnoremap <leader>nh :noh<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
-if has('gui_running')
-  nnoremap <silent> <esc> :nohlsearch<return><esc>
-else
-  " code from above
-  augroup no_highlight
-    autocmd TermResponse * nnoremap <esc> :noh<return><esc>
-  augroup END
-end
+nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
+
 " pulls vim changes from git
 if has('unix')
     nnoremap <leader>pv :!(cd ~/.vim && git reset HEAD --hard && git pull)<CR>
