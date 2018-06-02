@@ -113,6 +113,7 @@ if has("gui_running")
     colorscheme solarized
 endif
 let mapleader = "\<space>"
+set number relativenumber
 
 "-----mappings-----"
 nnoremap <leader>ev :silent e $MYVIMRC<CR>
