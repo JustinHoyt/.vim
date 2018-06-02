@@ -125,7 +125,6 @@ nnoremap <leader>b :b#<CR>
 nnoremap <leader>l :bn<CR>     " Move to the next buffer
 nnoremap <leader>h :bp<CR>     " Move to the previous buffer
 nnoremap <C-c> "+y
-nnoremap <C-v> "+p
 vnoremap <C-c> "+y
 inoremap <C-v> <C-r>+
 nnoremap <leader>d :bd<CR>
@@ -200,6 +199,11 @@ augroup autosourcing
     endif
 augroup END
 
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 let g:ctrlp_max_files=0 
 " Ignore these directories
