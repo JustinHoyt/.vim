@@ -31,7 +31,6 @@ endif
 
 call plug#begin(s:editor_root . '/plugged')
     Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'ervandew/supertab'
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-sensible'
@@ -41,6 +40,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-vinegar'
     Plug 'tpope/vim-repeat'
     Plug 'mhinz/vim-startify'
+    Plug 'ajh17/VimCompletesMe'
 
 if has('unix')
     Plug 'altercation/vim-colors-solarized'
@@ -49,11 +49,8 @@ if has('unix')
     Plug 'tpope/vim-unimpaired'
     Plug 'jiangmiao/auto-pairs'
     Plug 'rking/ag.vim'
-    Plug 'skwp/greplace.vim'
-    Plug 'leafgarland/typescript-vim'
     Plug 'junegunn/vim-peekaboo'
     Plug 'tpope/vim-fugitive'
-    Plug 'terryma/vim-multiple-cursors'
     Plug 'mgee/lightline-bufferline'
 endif
     
@@ -70,29 +67,8 @@ if (version >= 800 || has('nvim')) && has('unix')
     let g:ale_fix_on_save = 1
 endif
 
-if version >= 800 && has('unix')
-    Plug 'maralla/completor.vim'
-    Plug 'maralla/completor-typescript'
-endif
-
 if version < 800 && has('unix')
     Plug 'vim-syntastic/syntastic'
-    Plug 'davidhalter/jedi-vim'
-endif
-
-if has('nvim')
-    set inccommand=nosplit
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#enable_debug = 1
-    let g:deoplete#enable_profile = 1
-    Plug 'zchee/deoplete-jedi'
-    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern', 'for': 'javascript' }
-    Plug 'mhartington/nvim-typescript', { 'do': 'npm install -g tern', 'for': 'typescript' }
-    let g:tern_request_timeout = 1
-    let g:tern_request_timeout = 6000
-    let g:tern#command = ["tern"]
-    let g:tern#arguments = ["--persistent"]
 endif
 
 call plug#end()
