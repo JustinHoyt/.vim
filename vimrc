@@ -41,7 +41,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-repeat'
     Plug 'mhinz/vim-startify'
     Plug 'lifepillar/vim-mucomplete'
-    Plug 'artur-shaik/vim-javacomplete2'
+    Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
 
 if has('unix')
     Plug 'altercation/vim-colors-solarized'
