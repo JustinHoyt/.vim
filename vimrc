@@ -30,7 +30,6 @@ if empty(glob(s:editor_root . '/autoload/plug.vim'))
 endif
 
 call plug#begin(s:editor_root . '/plugged')
-    Plug 'ctrlpvim/ctrlp.vim'
     Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-sensible'
@@ -41,7 +40,14 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-repeat'
     Plug 'mhinz/vim-startify'
     Plug 'lifepillar/vim-mucomplete'
+    Plug 'davidhalter/jedi-vim'
     Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
+
+    if has('python') || has('python2') || has('python3')
+	Plug 'Yggdroot/LeaderF'
+    else
+	Plug 'ctrlpvim/ctrlp.vim'
+    endif
 
 if has('unix')
     Plug 'altercation/vim-colors-solarized'
@@ -112,6 +118,8 @@ nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 nnoremap <leader>s :Startify<CR>
+nnoremap <leader>t :e **/*
+nnoremap gb :ls<CR>:b<Space>
 
 " pulls vim changes from git
 if has('unix')
@@ -182,18 +190,21 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-let g:ctrlp_max_files=0 
 " Ignore these directories
 set wildignore+=*/build/**
 set wildignore+=*/bin/**
 set wildignore+=*/node_modules/**
+set wildignore=*.swp,*.bak
+set wildignore+=*.pyc,*.class,*.sln,*.Master,*.csproj,*.csproj.user,*.cache,*.dll,*.pdb,*.min.*
+set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
+set wildignore+=tags
+set wildignore+=*.tar.*
 " disable caching
 let g:ctrlp_use_caching=0
 let g:ctrlp_max_depth=40
 
 " put abbreviations at the end
 inoremap \dlr '${:,.2f}'.format()<esc>i
-:iabbrev dlr '${:,.2f}'.format(
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
 
 set grepprg=ag
@@ -210,15 +221,6 @@ if has('win32')
 	nnoremap <Char-0x07F> <BS>
     endif
 endif
-
-let g:multi_cursor_use_default_mapping=0
-
-" Default mapping
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<C-x>'
-nnoremap <C-x> :call multiple_cursors#quit()<CR>
 
 let g:lightline#bufferline#shorten_path = 0
 let g:lightline#bufferline#unnamed      = '[No Name]'
