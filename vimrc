@@ -44,7 +44,11 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
 
     if has('python') || has('python2') || has('python3')
-	Plug 'Yggdroot/LeaderF'
+	if has('win32')
+	    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+	else
+	    Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+	endif
     else
 	Plug 'ctrlpvim/ctrlp.vim'
     endif
