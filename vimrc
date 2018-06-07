@@ -18,55 +18,61 @@ elseif has('unix')
 endif
 
 " Setting up plugins
-if empty(glob(s:editor_root . '/autoload/plug.vim'))
+if empty(glob(s:editor_root . '/pack/minpac/opt/minpac'))
     autocmd VimEnter * echom "Downloading and installing vim-plug..."
     if has('unix')
-	silent execute "!curl -fLo " . s:editor_root . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+        silent execute "!curl -fLo " . s:editor_root . "/pack/minpac/opt/minpac --create-dirs https://github.com/k-takata/minpac.git"
     elseif has('win32')
-	silent execute '!New-Item -ItemType Directory -Force -Path ' . s:editor_root . '/autoload'
-	silent execute '!Invoke-WebRequest -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" -OutFile "' . s:editor_root . '/autoload/plug.vim"'
+        silent execute '!New-Item -ItemType Directory -Force -Path ' . s:editor_root . '/pack/minpack/opt'
+        silent execute '!git clone https://github.com/k-takata/minpac.git ' . s:editor_root . '/pack/minpack/opt/minpac'
     endif
-    autocmd VimEnter * PlugInstall
+   autocmd! VimEnter * call minpac#update() 
 endif
 
-call plug#begin(s:editor_root . '/plugged')
-    Plug 'sheerun/vim-polyglot'
-    Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-sensible'
-    Plug 'tpope/vim-surround'
-    Plug 'itchyny/lightline.vim'
-    Plug 'vimwiki/vimwiki'
-    Plug 'tpope/vim-vinegar'
-    Plug 'tpope/vim-repeat'
-    Plug 'mhinz/vim-startify'
-    Plug 'lifepillar/vim-mucomplete'
-    Plug 'davidhalter/jedi-vim'
-    Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
+packadd minpac
+call minpac#init()
 
-    if has('python') || has('python2') || has('python3')
-	if has('win32')
-	    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-	else
-	    Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-	endif
+" minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+" Add other plugins here.
+call minpac#add('sheerun/vim-polyglot')
+call minpac#add('tpope/vim-commentary')
+call minpac#add('tpope/vim-sensible')
+call minpac#add('tpope/vim-surround')
+call minpac#add('itchyny/lightline.vim')
+call minpac#add('vimwiki/vimwiki')
+call minpac#add('tpope/vim-vinegar')
+call minpac#add('tpope/vim-repeat')
+call minpac#add('mhinz/vim-startify')
+call minpac#add('lifepillar/vim-mucomplete')
+call minpac#add('davidhalter/jedi-vim', {'type': 'opt'})
+call minpac#add('artur-shaik/vim-javacomplete2', {'type': 'opt'})
+
+if has('python') || has('python2') || has('python3')
+    if has('win32')
+	call minpac#add('Yggdroot/LeaderF') ", {'do': './install.bat'})
     else
-	Plug 'ctrlpvim/ctrlp.vim'
+	call minpac#add('Yggdroot/LeaderF', {'do': './install.sh'})
     endif
+else
+    call minpac#add('ctrlpvim/ctrlp.vim')
+endif
 
 if has('unix')
-    Plug 'altercation/vim-colors-solarized'
-    Plug 'christoomey/vim-tmux-navigator'
-    Plug 'idanarye/vim-vebugger'
-    Plug 'tpope/vim-unimpaired'
-    Plug 'jiangmiao/auto-pairs'
-    Plug 'rking/ag.vim'
-    Plug 'junegunn/vim-peekaboo'
-    Plug 'tpope/vim-fugitive'
-    Plug 'mgee/lightline-bufferline'
+    call minpac#add('altercation/vim-colors-solarized')
+    call minpac#add('christoomey/vim-tmux-navigator')
+    call minpac#add('idanarye/vim-vebugger')
+    call minpac#add('tpope/vim-unimpaired')
+    call minpac#add('jiangmiao/auto-pairs')
+    call minpac#add('rking/ag.vim')
+    call minpac#add('junegunn/vim-peekaboo')
+    call minpac#add('tpope/vim-fugitive')
+    call minpac#add('mgee/lightline-bufferline')
 endif
     
 if (version >= 800 || has('nvim')) && has('unix') 
-    Plug 'w0rp/ale'
+    call minpac#add('w0rp/ale')
     let g:ale_fixers = {
     \   'javascript': ['eslint'],
     \   'python': ['autopep8'],
@@ -79,11 +85,8 @@ if (version >= 800 || has('nvim')) && has('unix')
 endif
 
 if version < 800 && has('unix')
-    Plug 'vim-syntastic/syntastic'
+    call minpac#add('vim-syntastic/syntastic')
 endif
-
-call plug#end()
-" Setting up plugins - end
 
 syntax enable
 set hlsearch
@@ -94,10 +97,10 @@ set smartcase
 
 let g:vebugger_leader=','
 if has('unix')
-    colorscheme solarized
+   colorscheme solarized
 endif
 if has("gui_running")
-    colorscheme solarized
+   colorscheme solarized
 endif
 let mapleader = "\<space>"
 set number relativenumber
@@ -105,24 +108,15 @@ set number relativenumber
 "-----mappings-----"
 nnoremap <leader>ev :silent e $MYVIMRC<CR>
 nnoremap <leader>rt :%retab<CR>
-nnoremap <leader>pi :PlugInstall<CR>
+nnoremap <leader>mi :call minpac#update()<CR>
+nnoremap <leader>mc :call minpac#clean()<CR>
 nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
-nnoremap <leader>b :b#<CR>
 nnoremap <leader>l :bn<CR>     " Move to the next buffer
 nnoremap <leader>h :bp<CR>     " Move to the previous buffer
-nnoremap <C-c> "+y
-vnoremap <C-c> "+y
-inoremap <C-v> <C-r>+
-nnoremap <leader>d :bd<CR>
-nnoremap <leader>pc :PlugClean<CR>
-nnoremap <leader>in :set invnumber<CR>
-nnoremap <leader>nh :noh<CR>
-nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 nnoremap <leader>s :Startify<CR>
-nnoremap <leader>t :e **/*
+noremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
 
 " pulls vim changes from git
@@ -131,52 +125,22 @@ if has('unix')
 elseif has ('win32')
     nnoremap <leader>pv :!cd ~/vimfiles; git reset HEAD --hard; git pull<CR>
 endif
-" Renames word selected accross the file
+
+"" Renames word selected accross the file
 nnoremap <leader>rn :%s/\<<c-r><c-w>\>/
 nnoremap Y y$
-:imap jk <Esc>
-if has('nvim')
-    " maps terminal window movements to emulate normal vim keybindings
-    tnoremap <C-h> <c-\><c-n><c-w>h
-    tnoremap <C-j> <c-\><c-n><c-w>j
-    tnoremap <C-k> <c-\><c-n><c-w>k
-    tnoremap <C-l> <c-\><c-n><c-w>l
-    tnoremap <M-n> <c-\><c-n>:enew<cr>  " To open a new empty buffer
-    tnoremap <M-t> <c-\><c-n>:terminal<cr>  " To open a new terminal
-    tnoremap <M-l> <c-\><c-n>:bn<CR>     " Move to the next buffer
-    tnoremap <M-h> <c-\><c-n>:bp<CR> " Move to the previous buffer
-    tnoremap <M-d> <c-\><c-n>:bd<CR>
-    tnoremap <M-b> <c-\><c-n>:b#<CR>
-endif
 
 " mappings for vebugger
 " ':help vebugger-keymaps' for more
 nnoremap ,k :VBGkill<CR>
 nnoremap ,s :VBGstartPDB %<CR>
 
-cmap w!! w !sudo tee > /dev/null % " Allow saving of files as sudo when I forgot to start vim using sudo
-set pastetoggle=<leader>pp
 " more natural windows mappings
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
-" buffer mappings
-set hidden		      " This allows buffers to be hidden if you've modified a buffer
-nnoremap <M-n> :enew<cr>  " To open a new empty buffer
-nnoremap <M-t> :terminal<cr>  " To open a new terminal
-nnoremap <M-l> :bn<CR>     " Move to the next buffer
-nnoremap <M-h> :bp<CR> " Move to the previous buffer
-nnoremap <M-d> :bd<CR>
-nnoremap <M-b> :b#<CR>
-" unimpaired mappings
-" Bubble single lines
-nmap <M-k> [e
-nmap <M-j> ]e
-" Bubble multiple lines
-vmap <M-k> [egv
-vmap <M-j> ]egv
 
 "-----auto-commands-----"
 augroup autosourcing
@@ -203,16 +167,10 @@ set wildignore+=*.pyc,*.class,*.sln,*.Master,*.csproj,*.csproj.user,*.cache,*.dl
 set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
 set wildignore+=tags
 set wildignore+=*.tar.*
-" disable caching
-let g:ctrlp_use_caching=0
-let g:ctrlp_max_depth=40
 
 " put abbreviations at the end
 inoremap \dlr '${:,.2f}'.format()<esc>i
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
-
-set grepprg=ag
-let g:grep_cmd_opts = '--line-numbers --noheading'
 
 " Set colors in windows console
 if has('win32')
@@ -238,15 +196,3 @@ set noshowmode
 set showtabline=2
 
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-" To enable smart (trying to guess import option) inserting class imports with F4, add:
-nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-
-" To enable usual (will ask for import option) inserting class imports with F5, add:
-nmap <F5> <Plug>(JavaComplete-Imports-Add)
-imap <F5> <Plug>(JavaComplete-Imports-Add)
-
-" To add all missing imports with F6:
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
