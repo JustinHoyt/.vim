@@ -84,6 +84,7 @@ set shiftwidth=4
 set background=dark
 set ignorecase
 set smartcase
+set completeopt=longest,menuone
 
 let g:vebugger_leader=','
 if has('unix')
@@ -109,6 +110,7 @@ nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 nnoremap <leader>s :Startify<CR>
 vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " pulls vim changes from git
 if has('unix')
