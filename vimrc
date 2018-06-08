@@ -17,6 +17,11 @@ elseif has('unix')
     let s:editor_root=expand("~/.vim")
 endif
 
+" Setting up plugins
+if empty(glob(s:editor_root . '/plugged'))
+    autocmd VimEnter * PlugInstall
+endif
+
 call plug#begin(s:editor_root . '/plugged')
     Plug 'sheerun/vim-polyglot' 
     Plug 'tpope/vim-commentary'
