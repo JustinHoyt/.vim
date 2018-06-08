@@ -40,7 +40,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-repeat'
     Plug 'mhinz/vim-startify'
     Plug 'lifepillar/vim-mucomplete'
-    Plug 'davidhalter/jedi-vim'
+    Plug 'davidhalter/jedi-vim', { 'for': ['python'] }
     Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
 
     if has('python') || has('python2') || has('python3')
@@ -108,21 +108,11 @@ nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :!python %<CR>
 nnoremap <leader>pt :!pytest<CR>
-nnoremap <leader>b :b#<CR>
 nnoremap <leader>l :bn<CR>     " Move to the next buffer
 nnoremap <leader>h :bp<CR>     " Move to the previous buffer
-nnoremap <C-c> "+y
-vnoremap <C-c> "+y
-inoremap <C-v> <C-r>+
-nnoremap <leader>d :bd<CR>
 nnoremap <leader>pc :PlugClean<CR>
-nnoremap <leader>in :set invnumber<CR>
-nnoremap <leader>nh :noh<CR>
-nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 nnoremap <leader>s :Startify<CR>
-nnoremap <leader>t :e **/*
 nnoremap gb :ls<CR>:b<Space>
 
 " pulls vim changes from git
@@ -134,49 +124,21 @@ endif
 " Renames word selected accross the file
 nnoremap <leader>rn :%s/\<<c-r><c-w>\>/
 nnoremap Y y$
-:imap jk <Esc>
-if has('nvim')
-    " maps terminal window movements to emulate normal vim keybindings
-    tnoremap <C-h> <c-\><c-n><c-w>h
-    tnoremap <C-j> <c-\><c-n><c-w>j
-    tnoremap <C-k> <c-\><c-n><c-w>k
-    tnoremap <C-l> <c-\><c-n><c-w>l
-    tnoremap <M-n> <c-\><c-n>:enew<cr>  " To open a new empty buffer
-    tnoremap <M-t> <c-\><c-n>:terminal<cr>  " To open a new terminal
-    tnoremap <M-l> <c-\><c-n>:bn<CR>     " Move to the next buffer
-    tnoremap <M-h> <c-\><c-n>:bp<CR> " Move to the previous buffer
-    tnoremap <M-d> <c-\><c-n>:bd<CR>
-    tnoremap <M-b> <c-\><c-n>:b#<CR>
-endif
 
 " mappings for vebugger
 " ':help vebugger-keymaps' for more
 nnoremap ,k :VBGkill<CR>
 nnoremap ,s :VBGstartPDB %<CR>
 
-cmap w!! w !sudo tee > /dev/null % " Allow saving of files as sudo when I forgot to start vim using sudo
-set pastetoggle=<leader>pp
 " more natural windows mappings
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
+
 " buffer mappings
 set hidden		      " This allows buffers to be hidden if you've modified a buffer
-nnoremap <M-n> :enew<cr>  " To open a new empty buffer
-nnoremap <M-t> :terminal<cr>  " To open a new terminal
-nnoremap <M-l> :bn<CR>     " Move to the next buffer
-nnoremap <M-h> :bp<CR> " Move to the previous buffer
-nnoremap <M-d> :bd<CR>
-nnoremap <M-b> :b#<CR>
-" unimpaired mappings
-" Bubble single lines
-nmap <M-k> [e
-nmap <M-j> ]e
-" Bubble multiple lines
-vmap <M-k> [egv
-vmap <M-j> ]egv
 
 "-----auto-commands-----"
 augroup autosourcing
@@ -203,16 +165,10 @@ set wildignore+=*.pyc,*.class,*.sln,*.Master,*.csproj,*.csproj.user,*.cache,*.dl
 set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
 set wildignore+=tags
 set wildignore+=*.tar.*
-" disable caching
-let g:ctrlp_use_caching=0
-let g:ctrlp_max_depth=40
 
 " put abbreviations at the end
 inoremap \dlr '${:,.2f}'.format()<esc>i
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
-
-set grepprg=ag
-let g:grep_cmd_opts = '--line-numbers --noheading'
 
 " Set colors in windows console
 if has('win32')
@@ -228,7 +184,6 @@ endif
 
 let g:lightline#bufferline#shorten_path = 0
 let g:lightline#bufferline#unnamed      = '[No Name]'
-
 let g:lightline = {}
 let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
 let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
@@ -238,11 +193,9 @@ set noshowmode
 set showtabline=2
 
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
 " To enable smart (trying to guess import option) inserting class imports with F4, add:
 nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-
 " To enable usual (will ask for import option) inserting class imports with F5, add:
 nmap <F5> <Plug>(JavaComplete-Imports-Add)
 imap <F5> <Plug>(JavaComplete-Imports-Add)
