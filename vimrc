@@ -30,9 +30,9 @@ if empty(glob(s:editor_root . '/autoload/plug.vim'))
 endif
 
 call plug#begin(s:editor_root . '/plugged')
-    Plug 'sheerun/vim-polyglot'
+    Plug 'sheerun/vim-polyglot' 
     Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-sensible'
+    Plug 'tpope/vim-sensible' 
     Plug 'tpope/vim-surround'
     Plug 'itchyny/lightline.vim'
     Plug 'vimwiki/vimwiki'
@@ -101,6 +101,7 @@ if has("gui_running")
 endif
 let mapleader = "\<space>"
 set number relativenumber
+set infercase
 
 "-----mappings-----"
 nnoremap <leader>ev :silent e $MYVIMRC<CR>
@@ -113,6 +114,7 @@ nnoremap <leader>h :bp<CR>     " Move to the previous buffer
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 nnoremap <leader>s :Startify<CR>
+vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
 
 " pulls vim changes from git
@@ -193,6 +195,7 @@ set noshowmode
 set showtabline=2
 
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+filetype plugin on
 " To enable smart (trying to guess import option) inserting class imports with F4, add:
 nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
