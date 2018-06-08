@@ -1,6 +1,5 @@
 eclim/
 plugin/
-autoload/
 plugged/
 bundle/**
 .netrwhist

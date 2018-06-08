@@ -17,18 +17,6 @@ elseif has('unix')
     let s:editor_root=expand("~/.vim")
 endif
 
-" Setting up plugins
-if empty(glob(s:editor_root . '/autoload/plug.vim'))
-    autocmd VimEnter * echom "Downloading and installing vim-plug..."
-    if has('unix')
-	silent execute "!curl -fLo " . s:editor_root . "/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    elseif has('win32')
-	silent execute '!New-Item -ItemType Directory -Force -Path ' . s:editor_root . '/autoload'
-	silent execute '!Invoke-WebRequest -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" -OutFile "' . s:editor_root . '/autoload/plug.vim"'
-    endif
-    autocmd VimEnter * PlugInstall
-endif
-
 call plug#begin(s:editor_root . '/plugged')
     Plug 'sheerun/vim-polyglot' 
     Plug 'tpope/vim-commentary'
@@ -65,7 +53,7 @@ if has('unix')
     Plug 'mgee/lightline-bufferline'
 endif
     
-if (version >= 800 || has('nvim')) && has('unix') 
+if (version >= 800 || has('nvim'))
     Plug 'w0rp/ale'
     let g:ale_fixers = {
     \   'javascript': ['eslint'],
