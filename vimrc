@@ -34,7 +34,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'mhinz/vim-startify'
     Plug 'lifepillar/vim-mucomplete'
     Plug 'davidhalter/jedi-vim', { 'for': ['python'] }
-    Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
+    Plug 'ludovicchabant/vim-gutentags'
 
     if has('python') || has('python2') || has('python3')
 	if has('win32')
@@ -47,6 +47,7 @@ call plug#begin(s:editor_root . '/plugged')
     endif
 
 if has('unix')
+    Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
     Plug 'altercation/vim-colors-solarized'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'idanarye/vim-vebugger'

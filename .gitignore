@@ -4,3 +4,4 @@ plugged/
 bundle/**
 .netrwhist
 vim.log
+tags.*
