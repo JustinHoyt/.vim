@@ -68,6 +68,7 @@ if (version >= 800 || has('nvim'))
     \}
     let g:ale_linters = {
     \   'python': ['mypy'],
+    \   'java': [''],
     \}
     let g:ale_fix_on_save = 1
 endif
