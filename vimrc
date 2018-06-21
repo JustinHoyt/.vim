@@ -35,6 +35,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'lifepillar/vim-mucomplete'
     Plug 'davidhalter/jedi-vim', { 'for': ['python'] }
     Plug 'ludovicchabant/vim-gutentags'
+    Plug 'jceb/vim-orgmode'
 
     if has('python') || has('python2') || has('python3')
 	if has('win32')
@@ -87,7 +88,7 @@ set ignorecase
 set smartcase
 set completeopt=longest,menuone
 
-let g:vebugger_leader=','
+" let g:vebugger_leader=','
 if has('unix')
     colorscheme solarized
 endif
@@ -95,6 +96,7 @@ if has("gui_running")
     colorscheme solarized
 endif
 let mapleader = "\<space>"
+let maplocalleader = ","
 set number relativenumber
 set infercase
 
