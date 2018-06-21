@@ -69,7 +69,6 @@ if (version >= 800 || has('nvim'))
     let g:ale_linters = {
     \   'python': ['mypy'],
     \}
-    let g:ale_fix_on_save = 1
 endif
 
 if version < 800 && has('unix')
@@ -111,7 +110,6 @@ nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 nnoremap <leader>s :Startify<CR>
 vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " pulls vim changes from git
 if has('unix')
@@ -189,16 +187,3 @@ let g:lightline.component_type   = {'buffers': 'tabsel'}
 let g:lightline.colorscheme = 'solarized'
 set noshowmode
 set showtabline=2
-
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-filetype plugin on
-" To enable smart (trying to guess import option) inserting class imports with F4, add:
-nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-" To enable usual (will ask for import option) inserting class imports with F5, add:
-nmap <F5> <Plug>(JavaComplete-Imports-Add)
-imap <F5> <Plug>(JavaComplete-Imports-Add)
-
-" To add all missing imports with F6:
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
