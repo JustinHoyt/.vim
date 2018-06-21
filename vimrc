@@ -68,6 +68,7 @@ if (version >= 800 || has('nvim'))
     \}
     let g:ale_linters = {
     \   'python': ['mypy'],
+    \   'java': [''],
     \}
 endif
 
