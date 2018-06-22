@@ -36,6 +36,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'davidhalter/jedi-vim', { 'for': ['python'] }
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'jceb/vim-orgmode'
+    Plug 'markonm/traces.vim'
 
     if has('python') || has('python2') || has('python3')
 	if has('win32')
@@ -87,6 +88,7 @@ set background=dark
 set ignorecase
 set smartcase
 set completeopt=longest,menuone
+set incsearch
 
 " let g:vebugger_leader=','
 if has('unix')
