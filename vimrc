@@ -11,7 +11,7 @@ if has('nvim')
     let s:editor_root=expand("~/.config/nvim")
 elseif has('win32')
     let s:editor_root=expand("~/vimfiles")
-    set shell=powershell 
+    set shell=powershell
     set shellcmdflag=-command
 elseif has('unix')
     let s:editor_root=expand("~/.vim")
@@ -23,9 +23,9 @@ if empty(glob(s:editor_root . '/plugged'))
 endif
 
 call plug#begin(s:editor_root . '/plugged')
-    Plug 'sheerun/vim-polyglot' 
+    Plug 'sheerun/vim-polyglot'
     Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-sensible' 
+    Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-surround'
     Plug 'itchyny/lightline.vim'
     Plug 'vimwiki/vimwiki'
@@ -60,7 +60,7 @@ if has('unix')
     Plug 'tpope/vim-fugitive'
     Plug 'mgee/lightline-bufferline'
 endif
-    
+
 if (version >= 800 || has('nvim'))
     Plug 'w0rp/ale'
     let g:ale_fixers = {
@@ -115,6 +115,7 @@ nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 nnoremap <leader>s :Startify<CR>
 vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
+nnoremap <leader>s :%s/\v
 
 " pulls vim changes from git
 if has('unix')
@@ -149,6 +150,11 @@ augroup autosourcing
     else
 	autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
     endif
+augroup END
+
+augroup TrimTrailingWhitespace
+    autocmd!
+    autocmd BufWritePre * %s/\s\+$//e
 augroup END
 
 augroup numbertoggle
