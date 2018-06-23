@@ -57,6 +57,7 @@ if has('unix')
     Plug 'junegunn/vim-peekaboo'
     Plug 'tpope/vim-fugitive'
     Plug 'mgee/lightline-bufferline'
+    Plug 'simnalamburt/vim-mundo'
 endif
 
 if (version >= 800 || has('nvim'))
@@ -114,6 +115,7 @@ nnoremap <leader>s :Startify<CR>
 vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
 nnoremap <leader>s :%s/\v
+nnoremap gh :MundoToggle<CR>
 
 " pulls vim changes from git
 if has('unix')
