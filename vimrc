@@ -37,6 +37,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'jceb/vim-orgmode'
     Plug 'markonm/traces.vim'
+    Plug 'simnalamburt/vim-mundo'
 
     if has('python') || has('python2') || has('python3')
 	if has('win32')
@@ -57,7 +58,6 @@ if has('unix')
     Plug 'junegunn/vim-peekaboo'
     Plug 'tpope/vim-fugitive'
     Plug 'mgee/lightline-bufferline'
-    Plug 'simnalamburt/vim-mundo'
 endif
 
 if (version >= 800 || has('nvim'))
