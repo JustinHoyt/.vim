@@ -186,6 +186,8 @@ if has('win32')
 	let &t_AF="\e[38;5;%dm"
 	inoremap <Char-0x07F> <BS>
 	nnoremap <Char-0x07F> <BS>
+    else
+	set guifont=consolas:h12
     endif
 endif
 
@@ -197,4 +199,6 @@ let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
 let g:lightline.component_type   = {'buffers': 'tabsel'}
 let g:lightline.colorscheme = 'solarized'
 set noshowmode
-set showtabline=2
+if has('unix')
+    set showtabline=2
+endif
