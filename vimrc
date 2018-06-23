@@ -180,7 +180,7 @@ nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
 " Set colors in windows console
 if has('win32')
     if !has("gui_running")
-	set term=xterm
+	set term=pcansi
 	set t_Co=256
 	let &t_AB="\e[48;5;%dm"
 	let &t_AF="\e[38;5;%dm"
