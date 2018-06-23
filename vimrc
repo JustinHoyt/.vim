@@ -49,13 +49,11 @@ call plug#begin(s:editor_root . '/plugged')
     endif
 
 if has('unix')
-    Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
     Plug 'altercation/vim-colors-solarized'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'idanarye/vim-vebugger'
     Plug 'tpope/vim-unimpaired'
     Plug 'jiangmiao/auto-pairs'
-    Plug 'rking/ag.vim'
     Plug 'junegunn/vim-peekaboo'
     Plug 'tpope/vim-fugitive'
     Plug 'mgee/lightline-bufferline'
