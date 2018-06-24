@@ -88,7 +88,7 @@ set ignorecase
 set smartcase
 set completeopt=longest,menuone
 set incsearch
-let g:gutentags_exclude_project_root=['/usr/local', s:editor_root]
+let g:gutentags_file_list_command = 'rg --files'
 
 " let g:vebugger_leader=','
 if has('unix')
