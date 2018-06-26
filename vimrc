@@ -38,7 +38,6 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'jceb/vim-orgmode'
     Plug 'markonm/traces.vim'
     Plug 'simnalamburt/vim-mundo'
-
     if has('python') || has('python2') || has('python3')
 	if has('win32')
 	    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
@@ -117,6 +116,13 @@ vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
 nnoremap <leader>s :%s/\v
 nnoremap gh :MundoToggle<CR>
+tnoremap <C-n> <C-w>N
+if has('win32')
+    " nnoremap <leader>t :tab terminal<CR>Remove-Module oh-my-posh<CR>
+    nnoremap <leader>t :tab terminal<CR>Set-Theme Darkblood<CR>
+else
+    nnoremap <leader>t :tab terminal<CR>set -o vi<CR>
+endif
 
 " pulls vim changes from git
 if has('unix')
