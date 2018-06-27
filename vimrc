@@ -120,7 +120,6 @@ vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
 nnoremap <leader>s :%s/\v
 nnoremap gh :MundoToggle<CR>
-tnoremap <C-n> <C-w>N
 if has('win32')
     nnoremap <leader>T :tab terminal<CR>Set-Theme tehrob<CR>
     nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>Set-Theme tehrob<CR>
@@ -150,10 +149,13 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
-tnoremap <C-J> <C-W><C-J>
-tnoremap <C-K> <C-W><C-K>
-tnoremap <C-L> <C-W><C-L>
-tnoremap <C-H> <C-W><C-H>
+if version < 800
+    tnoremap <C-n> <C-w>N
+    tnoremap <C-J> <C-W><C-J>
+    tnoremap <C-K> <C-W><C-K>
+    tnoremap <C-L> <C-W><C-L>
+    tnoremap <C-H> <C-W><C-H>
+endif
 
 " buffer mappings
 set hidden		      " This allows buffers to be hidden if you've modified a buffer
