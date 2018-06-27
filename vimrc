@@ -100,8 +100,12 @@ let mapleader = "\<space>"
 let maplocalleader = ","
 set number relativenumber
 set infercase
+set splitbelow
+set splitright
 
 "-----mappings-----"
+nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> \- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <leader>ev :silent e $MYVIMRC<CR>
 nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
@@ -118,10 +122,11 @@ nnoremap <leader>s :%s/\v
 nnoremap gh :MundoToggle<CR>
 tnoremap <C-n> <C-w>N
 if has('win32')
-    " nnoremap <leader>t :tab terminal<CR>Remove-Module oh-my-posh<CR>
-    nnoremap <leader>t :tab terminal<CR>Set-Theme Darkblood<CR>
+    nnoremap <leader>T :tab terminal<CR>Set-Theme Darkblood<CR>
+    nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>set -o vi<CR>Set-Theme Darkblood<CR>
 else
-    nnoremap <leader>t :tab terminal<CR>set -o vi<CR>
+    nnoremap <leader>T :tab terminal<CR>set -o vi<CR>
+    nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>set -o vi<CR>
 endif
 
 " pulls vim changes from git
@@ -145,6 +150,10 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
+tnoremap <C-J> <C-W><C-J>
+tnoremap <C-K> <C-W><C-K>
+tnoremap <C-L> <C-W><C-L>
+tnoremap <C-H> <C-W><C-H>
 
 " buffer mappings
 set hidden		      " This allows buffers to be hidden if you've modified a buffer
@@ -182,7 +191,6 @@ set wildignore+=*.tar.*
 
 " put abbreviations at the end
 inoremap \dlr '${:,.2f}'.format()<esc>i
-nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
 
 " Set colors in windows console
 if has('win32')
