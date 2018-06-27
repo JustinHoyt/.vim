@@ -122,8 +122,8 @@ nnoremap <leader>s :%s/\v
 nnoremap gh :MundoToggle<CR>
 tnoremap <C-n> <C-w>N
 if has('win32')
-    nnoremap <leader>T :tab terminal<CR>Set-Theme Darkblood<CR>
-    nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>Set-Theme Darkblood<CR>
+    nnoremap <leader>T :tab terminal<CR>Set-Theme tehrob<CR>
+    nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>Set-Theme tehrob<CR>
 else
     nnoremap <leader>T :tab terminal<CR>set -o vi<CR>
     nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>set -o vi<CR>
