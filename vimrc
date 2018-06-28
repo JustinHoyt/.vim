@@ -155,7 +155,8 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
 
 if exists(':tnoremap')
-    tnoremap <C-n> <C-\><C-n>
+    " tnoremap <C-n> <C-\><C-n>
+    tnoremap <leader><Esc> <C-\><C-n>
     tnoremap <C-J> <C-W><C-J>
     tnoremap <C-K> <C-W><C-K>
     tnoremap <C-L> <C-W><C-L>
