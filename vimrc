@@ -183,10 +183,9 @@ augroup TrimTrailingWhitespace
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
 
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup Terminal
+    autocmd!
+    autocmd TerminalOpen * :set nonumber norelativenumber
 augroup END
 
 " Ignore these directories
