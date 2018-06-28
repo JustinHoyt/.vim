@@ -38,6 +38,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'jceb/vim-orgmode'
     Plug 'markonm/traces.vim'
     Plug 'simnalamburt/vim-mundo'
+    Plug 'Quramy/tsuquyomi'
     if has('python') || has('python2') || has('python3')
 	if has('win32')
 	    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
@@ -55,7 +56,6 @@ if has('unix')
     Plug 'tpope/vim-unimpaired'
     Plug 'jiangmiao/auto-pairs'
     Plug 'junegunn/vim-peekaboo'
-    Plug 'tpope/vim-fugitive'
     Plug 'mgee/lightline-bufferline'
 endif
 
@@ -63,6 +63,7 @@ if (version >= 800 || has('nvim'))
     Plug 'w0rp/ale'
     let g:ale_fixers = {
     \   'javascript': ['eslint'],
+    \   'typescript': ['tslint'],
     \   'python': ['autopep8'],
     \   'java': [''],
     \}
@@ -120,6 +121,9 @@ vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
 nnoremap <leader>s :%s/\v
 nnoremap gh :MundoToggle<CR>
+nnoremap <leader>it :TsuImport<CR>
+nnoremap <leader>af :ALEFix<CR>
+
 if has('win32')
     nnoremap <leader>T :tab terminal<CR>Set-Theme tehrob<CR>
     nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>Set-Theme tehrob<CR>
