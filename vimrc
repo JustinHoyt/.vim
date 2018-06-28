@@ -121,8 +121,8 @@ nnoremap gb :ls<CR>:b<Space>
 nnoremap <leader>s :%s/\v
 nnoremap gh :MundoToggle<CR>
 if has('win32')
-    nnoremap <leader>T :tab terminal<CR>Set-Theme tehrob<CR>
-    nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>Set-Theme tehrob<CR>
+    nnoremap <leader>T :tab terminal<CR>Set-Theme tehrob<CR>clear<CR>
+    nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>Set-Theme tehrob<CR>clear<CR>
 else
     nnoremap <leader>T :tab terminal<CR>set -o vi<CR>
     nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>set -o vi<CR>
@@ -149,6 +149,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
+
 if exists(':tnoremap')
     tnoremap <C-n> <C-\><C-n>
     tnoremap <C-J> <C-W><C-J>
@@ -195,17 +196,23 @@ set wildignore+=*.tar.*
 inoremap \dlr '${:,.2f}'.format()<esc>i
 
 " Set colors in windows console
-if has('win32')
-    if !has("gui_running")
-	set term=pcansi
-	set t_Co=256
-	let &t_AB="\e[48;5;%dm"
-	let &t_AF="\e[38;5;%dm"
-	inoremap <Char-0x07F> <BS>
-	nnoremap <Char-0x07F> <BS>
-    else
-	set guifont=consolas:h12
-    endif
+if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
+    " set term=pcansi
+    set term=xterm
+    set t_Co=256
+    inoremap <Char-0x07F> <BS>
+    inoremap <Char-0x04B> <LEFT>
+    nnoremap <Char-0x07F> <BS>
+    let &t_AB="\e[48;5;%dm"
+    let &t_AF="\e[38;5;%dm"
+    set encoding=utf-8
+    set termencoding=utf-8
+    set fileencoding=utf-8
+endif
+
+if has('win32') && has('gui_running')
+    autocmd GUIEnter * simalt ~x
+    set guifont=consolas:h12
 endif
 
 let g:lightline#bufferline#shorten_path = 0
@@ -219,3 +226,4 @@ set noshowmode
 if has('unix')
     set showtabline=2
 endif
+
