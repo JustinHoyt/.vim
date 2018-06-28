@@ -172,6 +172,9 @@ augroup autosourcing
         autocmd BufWritePost vimrc execute "source " . s:editor_root . "/init.vim"
     else
         autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
+        if has('win32') && has('gui_running')
+            autocmd BufWritePost vimrc simalt ~x
+        endif
     endif
 augroup END
 
@@ -214,7 +217,7 @@ endif
 
 if has('win32') && has('gui_running')
     autocmd GUIEnter * simalt ~x
-    set guifont=consolas:h12
+    set guifont=consolas:h13
     set guioptions-=m  "remove menu bar
     set guioptions-=T  "remove toolbar
     set guioptions-=r  "remove right-hand scroll bar
