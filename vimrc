@@ -201,7 +201,6 @@ inoremap \dlr '${:,.2f}'.format()<esc>i
 
 " Set colors in windows console
 if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
-    " set term=pcansi
     set term=xterm
     set t_Co=256
     inoremap <Char-0x07F> <BS>
@@ -217,6 +216,10 @@ endif
 if has('win32') && has('gui_running')
     autocmd GUIEnter * simalt ~x
     set guifont=consolas:h12
+    set guioptions-=m  "remove menu bar
+    set guioptions-=T  "remove toolbar
+    set guioptions-=r  "remove right-hand scroll bar
+    set guioptions-=L  "remove left-hand scroll bar
 endif
 
 let g:lightline#bufferline#shorten_path = 0
