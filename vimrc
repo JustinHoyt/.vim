@@ -40,13 +40,13 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'simnalamburt/vim-mundo'
     Plug 'Quramy/tsuquyomi'
     if has('python') || has('python2') || has('python3')
-	if has('win32')
-	    Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-	else
-	    Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-	endif
+        if has('win32')
+            Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+        else
+            Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+        endif
     else
-	Plug 'ctrlpvim/ctrlp.vim'
+        Plug 'ctrlpvim/ctrlp.vim'
     endif
 
 if has('unix')
@@ -163,15 +163,15 @@ if exists(':tnoremap')
 endif
 
 " buffer mappings
-set hidden		      " This allows buffers to be hidden if you've modified a buffer
+set hidden                      " This allows buffers to be hidden if you've modified a buffer
 
 "-----auto-commands-----"
 augroup autosourcing
     autocmd!
     if has('nvim')
-	autocmd BufWritePost vimrc execute "source " . s:editor_root . "/init.vim"
+        autocmd BufWritePost vimrc execute "source " . s:editor_root . "/init.vim"
     else
-	autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
+        autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
     endif
 augroup END
 
