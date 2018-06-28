@@ -204,7 +204,6 @@ if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
     set term=xterm
     set t_Co=256
     inoremap <Char-0x07F> <BS>
-    inoremap <Char-0x04B> <LEFT>
     nnoremap <Char-0x07F> <BS>
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
