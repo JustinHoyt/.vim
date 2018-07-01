@@ -39,6 +39,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'markonm/traces.vim'
     Plug 'simnalamburt/vim-mundo'
     Plug 'Quramy/tsuquyomi'
+    Plug 'luochen1990/rainbow'
     Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
     if has('win32')
 	Plug 'Shougo/vimproc.vim'
@@ -174,7 +175,7 @@ endif
 set hidden                      " This allows buffers to be hidden if you've modified a buffer
 
 "-----Macros-----"
-let @p = 'o€#3''IPlug ''ldf/.'
+let @p = 'oPlug ''''"+PF''ldf/.'
 
 "-----auto-commands-----"
 augroup autosourcing
@@ -194,10 +195,12 @@ augroup TrimTrailingWhitespace
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
 
-augroup Terminal
-    autocmd!
-    autocmd TerminalOpen * :set nonumber norelativenumber
-augroup END
+if !exists(':tnoremap')
+    augroup Terminal
+	autocmd!
+	autocmd TerminalOpen * :set nonumber norelativenumber
+    augroup END
+endif
 
 " Ignore these directories
 set wildignore+=*/build/**
