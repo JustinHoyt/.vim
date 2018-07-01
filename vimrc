@@ -39,6 +39,12 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'markonm/traces.vim'
     Plug 'simnalamburt/vim-mundo'
     Plug 'Quramy/tsuquyomi'
+    Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
+    if has('win32')
+	Plug 'Shougo/vimproc.vim'
+    else
+	Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+    endif
     if has('python') || has('python2') || has('python3')
         if has('win32')
             Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
@@ -58,6 +64,7 @@ if has('unix')
     Plug 'junegunn/vim-peekaboo'
     Plug 'mgee/lightline-bufferline'
 endif
+
 
 if (version >= 800 || has('nvim'))
     Plug 'w0rp/ale'
@@ -165,6 +172,9 @@ endif
 
 " buffer mappings
 set hidden                      " This allows buffers to be hidden if you've modified a buffer
+
+"-----Macros-----"
+let @p = 'o€#3''IPlug ''ldf/.'
 
 "-----auto-commands-----"
 augroup autosourcing
