@@ -111,6 +111,7 @@ set number relativenumber
 set infercase
 set splitbelow
 set splitright
+let g:rainbow_active = 1
 
 "-----mappings-----"
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
@@ -163,7 +164,7 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
 
 if exists(':tnoremap')
-    " tnoremap <C-n> <C-\><C-n>
+    tnoremap <C-n> <C-\><C-n>
     tnoremap <leader><Esc> <C-\><C-n>
     tnoremap <C-J> <C-W><C-J>
     tnoremap <C-K> <C-W><C-K>
@@ -226,6 +227,16 @@ if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
     set encoding=utf-8
     set termencoding=utf-8
     set fileencoding=utf-8
+endif
+
+if has('unix') && has('gui_running')
+    set macligatures
+    set lines=999 columns=9999
+    set guifont=Fira\ Code:h12
+    set guioptions-=m  "remove menu bar
+    set guioptions-=T  "remove toolbar
+    set guioptions-=r  "remove right-hand scroll bar
+    set guioptions-=L  "remove left-hand scroll bar
 endif
 
 if has('win32') && has('gui_running')
