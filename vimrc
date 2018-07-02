@@ -46,14 +46,15 @@ call plug#begin(s:editor_root . '/plugged')
     else
 	Plug 'Shougo/vimproc.vim', {'do' : 'make'}
     endif
-    if has('python') || has('python2') || has('python3')
-        if has('win32')
-            Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-        else
-            Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-        endif
+    if ( has('python') || has('python2') || has('python3') ) && has('win32')
+        Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
     else
         Plug 'ctrlpvim/ctrlp.vim'
+        if executable('rg')
+            set grepprg=rg\ --color=never
+            let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+            let g:ctrlp_use_caching = 0
+        endif
     endif
 
 if has('unix')
