@@ -241,10 +241,7 @@ if has('unix') && has('gui_running')
     set macligatures
     set lines=999 columns=9999
     set guifont=Fira\ Code:h12
-    set guioptions-=m  "remove menu bar
-    set guioptions-=T  "remove toolbar
-    set guioptions-=r  "remove right-hand scroll bar
-    set guioptions-=L  "remove left-hand scroll bar
+    set guioptions=ca
 endif
 
 if has('win32') && has('gui_running')
@@ -252,10 +249,7 @@ if has('win32') && has('gui_running')
     set encoding=utf-8
     autocmd GUIEnter * simalt ~x
     set guifont=Fira\ Code:h12
-    set guioptions-=m  "remove menu bar
-    set guioptions-=T  "remove toolbar
-    set guioptions-=r  "remove right-hand scroll bar
-    set guioptions-=L  "remove left-hand scroll bar
+    set guioptions=ca
 endif
 
 let g:lightline#bufferline#shorten_path = 0
