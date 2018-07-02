@@ -240,8 +240,10 @@ if has('unix') && has('gui_running')
 endif
 
 if has('win32') && has('gui_running')
+    set renderoptions=type:directx
+    set encoding=utf-8
     autocmd GUIEnter * simalt ~x
-    set guifont=consolas:h13
+    set guifont=Fira\ Code:h12
     set guioptions-=m  "remove menu bar
     set guioptions-=T  "remove toolbar
     set guioptions-=r  "remove right-hand scroll bar
