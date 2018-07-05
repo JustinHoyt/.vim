@@ -108,9 +108,6 @@ let g:gutentags_file_list_command = 'rg --files'
 let g:tsuquyomi_single_quote_import=1
 
 " let g:vebugger_leader=','
-if has('unix')
-    colorscheme solarized
-endif
 if has("gui_running")
     colorscheme solarized
 endif
@@ -143,12 +140,15 @@ nnoremap gh :MundoToggle<CR>
 nnoremap <leader>it :TsuImport<CR>
 nnoremap <leader>af :ALEFix<CR>
 
-if has('win32')
-    nnoremap <leader>T :tab terminal<CR>Set-Theme tehrob<CR>clear<CR>
-    nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>Set-Theme tehrob<CR>clear<CR>
-else
-    nnoremap <leader>T :tab terminal<CR>set -o vi<CR>
-    nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>set -o vi<CR>
+
+if exists(':tnoremap')
+    if has('win32')
+        nnoremap <leader>T :tab terminal<CR>Set-Theme tehrob<CR>clear<CR>
+        nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>Set-Theme tehrob<CR>clear<CR>
+    else
+        nnoremap <leader>T :tab terminal<CR>set -o vi<CR>
+        nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>set -o vi<CR>
+    endif
 endif
 
 " pulls vim changes from git
@@ -209,7 +209,7 @@ augroup END
 if has("gui_running")
     autocmd GUIEnter * set vb t_vb=
 endif
-if !exists(':tnoremap')
+if exists(':tnoremap')
     augroup Terminal
 	autocmd!
 	autocmd TerminalOpen * :set nonumber norelativenumber
