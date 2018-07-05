@@ -120,6 +120,7 @@ set number relativenumber
 set infercase
 set splitbelow
 set splitright
+set noerrorbells
 let g:rainbow_active = 1
 
 "-----mappings-----"
@@ -205,6 +206,9 @@ augroup TrimTrailingWhitespace
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
 
+if has("gui_running")
+    autocmd GUIEnter * set vb t_vb=
+endif
 if !exists(':tnoremap')
     augroup Terminal
 	autocmd!
