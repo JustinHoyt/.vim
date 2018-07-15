@@ -127,7 +127,7 @@ nnoremap <leader>ev :silent e $MYVIMRC<CR>
 nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :!python %<CR>
-nnoremap <leader>pt :!pytest<CR>
+nnoremap <leader>pt :!python test_%<CR>
 nnoremap <leader>l :bn<CR>     " Move to the next buffer
 nnoremap <leader>h :bp<CR>     " Move to the previous buffer
 nnoremap <leader>pc :PlugClean<CR>
@@ -229,7 +229,10 @@ set wildignore+=*.tar.*
 " put abbreviations at the end
 inoremap \dlr '${:,.2f}'.format()<esc>i
 
-" Set colors in windows console
+if has('unix') && !has('gui_running')
+    au VimLeave * :!clear
+endif
+
 if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
     set term=xterm
     set t_Co=256
