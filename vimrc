@@ -39,7 +39,6 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'markonm/traces.vim'
     Plug 'simnalamburt/vim-mundo'
     Plug 'Quramy/tsuquyomi'
-    Plug 'luochen1990/rainbow'
     Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
     if has('win32')
 	Plug 'Shougo/vimproc.vim'
@@ -58,11 +57,10 @@ call plug#begin(s:editor_root . '/plugged')
     endif
 
 if has('unix')
-    Plug 'altercation/vim-colors-solarized'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'idanarye/vim-vebugger'
     Plug 'tpope/vim-unimpaired'
-    Plug 'jiangmiao/auto-pairs'
+    " Plug 'jiangmiao/auto-pairs'
     Plug 'junegunn/vim-peekaboo'
     Plug 'mgee/lightline-bufferline'
 endif
@@ -73,11 +71,9 @@ if (version >= 800 || has('nvim'))
     let g:ale_fixers = {
     \   'javascript': ['eslint'],
     \   'typescript': ['tslint'],
-    \   'python': ['autopep8'],
     \   'java': [''],
     \}
     let g:ale_linters = {
-    \   'python': ['mypy'],
     \   'java': [''],
     \}
 endif
@@ -106,13 +102,13 @@ set shiftwidth=4
 set expandtab
 let g:gutentags_file_list_command = 'rg --files'
 let g:tsuquyomi_single_quote_import=1
+let g:VM_no_meta_mappings=1
 
-" let g:vebugger_leader=','
-if has("gui_running")
-    colorscheme solarized
-endif
+let g:vebugger_leader=','
+set background=light
+colorscheme solarized
 let mapleader = "\<space>"
-let maplocalleader = ","
+" let maplocalleader = ","
 set number relativenumber
 set infercase
 set splitbelow
@@ -121,13 +117,14 @@ set noerrorbells
 let g:rainbow_active = 1
 
 "-----mappings-----"
+nnoremap <leader>bg :ToggleBG<CR>
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> \- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <leader>ev :silent e $MYVIMRC<CR>
 nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
-nnoremap <leader>rp :!python %<CR>
-nnoremap <leader>pt :!python test_%<CR>
+nnoremap <leader>rp :w<CR>:!python3 %<CR>
+nnoremap <leader>pt :!python3 test_%<CR>
 nnoremap <leader>l :bn<CR>     " Move to the next buffer
 nnoremap <leader>h :bp<CR>     " Move to the previous buffer
 nnoremap <leader>pc :PlugClean<CR>
