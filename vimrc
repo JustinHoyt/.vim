@@ -105,7 +105,7 @@ let g:tsuquyomi_single_quote_import=1
 let g:VM_no_meta_mappings=1
 
 let g:vebugger_leader=','
-set background=light
+set background=dark
 colorscheme solarized
 let mapleader = "\<space>"
 " let maplocalleader = ","
@@ -125,6 +125,7 @@ nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>rp :w<CR>:!python3 %<CR>
 nnoremap <leader>pt :!python3 test_%<CR>
+nnoremap <leader>jt :!.\gradlew test --tests *.%:t:r<CR>
 nnoremap <leader>l :bn<CR>     " Move to the next buffer
 nnoremap <leader>h :bp<CR>     " Move to the previous buffer
 nnoremap <leader>pc :PlugClean<CR>
