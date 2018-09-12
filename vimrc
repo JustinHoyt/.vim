@@ -35,15 +35,14 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'lifepillar/vim-mucomplete'
     Plug 'davidhalter/jedi-vim', { 'for': ['python'] }
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'jceb/vim-orgmode'
     Plug 'markonm/traces.vim'
     Plug 'simnalamburt/vim-mundo'
     Plug 'Quramy/tsuquyomi'
     Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
     if has('win32')
-	Plug 'Shougo/vimproc.vim'
+        Plug 'Shougo/vimproc.vim'
     else
-	Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+        Plug 'Shougo/vimproc.vim', {'do' : 'make'}
     endif
     if ( has('python') || has('python2') || has('python3') ) && has('win32')
         Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
@@ -56,31 +55,29 @@ call plug#begin(s:editor_root . '/plugged')
         endif
     endif
 
-if has('unix')
-    Plug 'christoomey/vim-tmux-navigator'
-    Plug 'idanarye/vim-vebugger'
-    Plug 'tpope/vim-unimpaired'
-    " Plug 'jiangmiao/auto-pairs'
-    Plug 'junegunn/vim-peekaboo'
-    Plug 'mgee/lightline-bufferline'
-endif
+    if has('unix')
+        Plug 'christoomey/vim-tmux-navigator'
+        Plug 'idanarye/vim-vebugger'
+        Plug 'jiangmiao/auto-pairs'
+        Plug 'mgee/lightline-bufferline'
+    endif
 
 
-if (version >= 800 || has('nvim'))
-    Plug 'w0rp/ale'
-    let g:ale_fixers = {
-    \   'javascript': ['eslint'],
-    \   'typescript': ['tslint'],
-    \   'java': [''],
-    \}
-    let g:ale_linters = {
-    \   'java': [''],
-    \}
-endif
+    if (version >= 800 || has('nvim'))
+        Plug 'w0rp/ale'
+        let g:ale_fixers = {
+        \   'javascript': ['eslint'],
+        \   'typescript': ['tslint'],
+        \   'java': [''],
+        \}
+        let g:ale_linters = {
+        \   'java': [''],
+        \}
+    endif
 
-if version < 800 && has('unix')
-    Plug 'vim-syntastic/syntastic'
-endif
+    if version < 800 && has('unix')
+        Plug 'vim-syntastic/syntastic'
+    endif
 
 call plug#end()
 " Setting up plugins - end
@@ -100,20 +97,18 @@ set tabstop=4
 set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
-let g:gutentags_file_list_command = 'rg --files'
-let g:tsuquyomi_single_quote_import=1
-let g:VM_no_meta_mappings=1
-
-let g:vebugger_leader=','
 set background=dark
 colorscheme solarized
-let mapleader = "\<space>"
-" let maplocalleader = ","
 set number relativenumber
 set infercase
 set splitbelow
 set splitright
 set noerrorbells
+let g:gutentags_file_list_command = 'rg --files'
+let g:tsuquyomi_single_quote_import=1
+let g:VM_no_meta_mappings=1
+let g:vebugger_leader=','
+let mapleader = "\<space>"
 let g:rainbow_active = 1
 
 "-----mappings-----"
@@ -155,7 +150,8 @@ if has('unix')
 elseif has ('win32')
     nnoremap <leader>pv :!cd ~/vimfiles; git reset HEAD --hard; git pull<CR>
 endif
-" Renames word selected accross the file
+
+" Renames selected word accross the file
 nnoremap <leader>rn :%s/\<<c-r><c-w>\>/
 nnoremap Y y$
 
@@ -173,7 +169,6 @@ nnoremap <C-=> <C-W><C-=>
 
 if exists(':tnoremap')
     tnoremap <C-n> <C-\><C-n>
-    tnoremap <leader><Esc> <C-\><C-n>
     tnoremap <C-J> <C-W><C-J>
     tnoremap <C-K> <C-W><C-K>
     tnoremap <C-L> <C-W><C-L>
@@ -184,6 +179,7 @@ endif
 set hidden                      " This allows buffers to be hidden if you've modified a buffer
 
 "-----Macros-----"
+" Takes clipboard link of github to plugin and turns it into vim-plug syntax
 let @p = 'oPlug ''''"+PF''ldf/.'
 
 "-----auto-commands-----"
@@ -207,6 +203,7 @@ augroup END
 if has("gui_running")
     autocmd GUIEnter * set vb t_vb=
 endif
+
 if exists(':tnoremap')
     augroup Terminal
 	autocmd!
