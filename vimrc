@@ -34,7 +34,6 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'mhinz/vim-startify'
     Plug 'lifepillar/vim-mucomplete'
     Plug 'davidhalter/jedi-vim', { 'for': ['python'] }
-    Plug 'ludovicchabant/vim-gutentags'
     Plug 'markonm/traces.vim'
     Plug 'simnalamburt/vim-mundo'
     Plug 'Quramy/tsuquyomi'
