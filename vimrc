@@ -98,7 +98,6 @@ set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
 set background=dark
-colorscheme solarized
 set number relativenumber
 set infercase
 set splitbelow
@@ -201,14 +200,8 @@ augroup TrimTrailingWhitespace
 augroup END
 
 if has("gui_running")
+    colorscheme solarized
     autocmd GUIEnter * set vb t_vb=
-endif
-
-if exists(':tnoremap')
-    augroup Terminal
-	autocmd!
-	autocmd TerminalOpen * :set nonumber norelativenumber
-    augroup END
 endif
 
 " Ignore these directories
