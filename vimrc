@@ -1,6 +1,7 @@
 "-----Newly Learned Vim Features-----"
 " <visual> o: alternates cursor position of highlighed text
-"
+" <C-f> inside command mode opens the command line window
+" q: does the same thing but from normal mode
 "
 "-----Test the speed of vim on startup on unix and windows, respectively-----"
 " rm -f vim.log && vim --startuptime vim.log +q && tail -n 1 vim.log | cut -f1 -d' '
@@ -38,6 +39,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'simnalamburt/vim-mundo'
     Plug 'Quramy/tsuquyomi'
     Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
+    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+
     if has('win32')
         Plug 'Shougo/vimproc.vim'
     else
@@ -56,9 +59,10 @@ call plug#begin(s:editor_root . '/plugged')
 
     if has('unix')
         Plug 'christoomey/vim-tmux-navigator'
-        Plug 'idanarye/vim-vebugger'
         Plug 'jiangmiao/auto-pairs'
         Plug 'mgee/lightline-bufferline'
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        Plug 'junegunn/fzf.vim'
     endif
 
 
@@ -67,6 +71,7 @@ call plug#begin(s:editor_root . '/plugged')
         let g:ale_fixers = {
         \   'javascript': ['eslint'],
         \   'typescript': ['tslint'],
+        \   'python': ['autopep8'],
         \   'java': [''],
         \}
         let g:ale_linters = {
@@ -79,24 +84,22 @@ call plug#begin(s:editor_root . '/plugged')
     endif
 
 call plug#end()
-" Setting up plugins - end
 
 syntax enable
 set hlsearch
 set shiftwidth=4
-set background=dark
 set ignorecase
 set smartcase
 set completeopt=longest,menuone
 set incsearch
+set termguicolors
+colorscheme challenger_deep
+
+
 filetype plugin indent on
-" show existing tab with 4 spaces width
 set tabstop=4
-" when indenting with '>', use 4 spaces width
 set shiftwidth=4
-" On pressing tab, insert 4 spaces
 set expandtab
-set background=dark
 set number relativenumber
 set infercase
 set splitbelow
@@ -110,27 +113,26 @@ let mapleader = "\<space>"
 let g:rainbow_active = 1
 
 "-----mappings-----"
+if has('unix')
+    nnoremap <leader>o :FZF<CR>
+    nnoremap <leader>f :Ag<CR>
+endif
 nnoremap <leader>bg :ToggleBG<CR>
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> \- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <leader>ev :silent e $MYVIMRC<CR>
-nnoremap <leader>rt :%retab<CR>
 nnoremap <leader>pi :PlugInstall<CR>
+nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>rp :w<CR>:!python3 %<CR>
 nnoremap <leader>pt :!python3 test_%<CR>
-nnoremap <leader>jt :!.\gradlew test --tests *.%:t:r<CR>
 nnoremap <leader>l :bn<CR>     " Move to the next buffer
 nnoremap <leader>h :bp<CR>     " Move to the previous buffer
-nnoremap <leader>pc :PlugClean<CR>
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
-nnoremap <leader>s :Startify<CR>
 vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
-nnoremap <leader>s :%s/\v
 nnoremap gh :MundoToggle<CR>
-nnoremap <leader>it :TsuImport<CR>
 nnoremap <leader>af :ALEFix<CR>
-
+nnoremap Y y$
 
 if exists(':tnoremap')
     if has('win32')
@@ -151,12 +153,6 @@ endif
 
 " Renames selected word accross the file
 nnoremap <leader>rn :%s/\<<c-r><c-w>\>/
-nnoremap Y y$
-
-" mappings for vebugger
-" ':help vebugger-keymaps' for more
-nnoremap ,k :VBGkill<CR>
-nnoremap ,s :VBGstartPDB %<CR>
 
 " more natural windows mappings
 nnoremap <C-J> <C-W><C-J>
@@ -249,11 +245,10 @@ endif
 
 let g:lightline#bufferline#shorten_path = 0
 let g:lightline#bufferline#unnamed      = '[No Name]'
-let g:lightline = {}
+let g:lightline = {'colorscheme': 'challenger_deep'}
 let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
 let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
 let g:lightline.component_type   = {'buffers': 'tabsel'}
-let g:lightline.colorscheme = 'solarized'
 set noshowmode
 if has('unix')
     set showtabline=2
