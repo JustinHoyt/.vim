@@ -115,7 +115,7 @@ let g:rainbow_active = 1
 "-----mappings-----"
 if has('unix')
     nnoremap <leader>o :FZF<CR>
-    nnoremap <leader>f :Ag<CR>
+    nnoremap <leader>f :Rg<CR>
 endif
 nnoremap <leader>bg :ToggleBG<CR>
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
@@ -253,4 +253,3 @@ set noshowmode
 if has('unix')
     set showtabline=2
 endif
-
