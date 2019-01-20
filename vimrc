@@ -77,6 +77,7 @@ call plug#begin(s:editor_root . '/plugged')
         let g:ale_linters = {
         \   'java': [''],
         \}
+        set termguicolors
     endif
 
     if version < 800 && has('unix')
@@ -92,7 +93,6 @@ set ignorecase
 set smartcase
 set completeopt=longest,menuone
 set incsearch
-set termguicolors
 colorscheme challenger_deep
 
 
