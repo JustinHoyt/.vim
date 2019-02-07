@@ -38,6 +38,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'markonm/traces.vim'
     Plug 'simnalamburt/vim-mundo'
     Plug 'Quramy/tsuquyomi'
+    Plug 'ekalinin/Dockerfile.vim'
     Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 
