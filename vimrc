@@ -41,6 +41,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'ekalinin/Dockerfile.vim'
     Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+    Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'altercation/vim-colors-solarized', { 'as': 'solarized' }
 
     if has('win32')
         Plug 'Shougo/vimproc.vim'
@@ -94,8 +96,46 @@ set ignorecase
 set smartcase
 set completeopt=longest,menuone
 set incsearch
-colorscheme challenger_deep
+syntax enable
+let g:solarized_termcolors=256
+colorscheme solarized
+let hour = strftime("%H")
+if 6 <= hour && hour < 18
+  set background=light
+else
+  set background=dark
+endif
 
+let g:lightline#bufferline#shorten_path = 0
+let g:lightline#bufferline#unnamed      = '[No Name]'
+let g:lightline = {'colorscheme': 'solarized'}
+let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type   = {'buffers': 'tabsel'}
+set noshowmode
+if has('unix')
+    set showtabline=2
+endif
+
+augroup LightlineColorscheme
+    autocmd!
+    autocmd ColorScheme * call s:lightline_update()
+augroup END
+function! s:lightline_update()
+    if !exists('g:loaded_lightline')
+        return
+    endif
+    try
+        if g:colors_name =~# 'wombat\|solarized\|landscape\|jellybeans\|seoul256\|Tomorrow'
+            let g:lightline.colorscheme =
+                        \ substitute(substitute(g:colors_name, '-', '_', 'g'), '256.*', '', '')
+            call lightline#init()
+            call lightline#colorscheme()
+            call lightline#update()
+        endif
+    catch
+    endtry
+endfunction
 
 filetype plugin indent on
 set tabstop=4
@@ -126,13 +166,15 @@ nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>rp :w<CR>:!python3 %<CR>
 nnoremap <leader>pt :!python3 test_%<CR>
-nnoremap <leader>l :bn<CR>     " Move to the next buffer
-nnoremap <leader>h :bp<CR>     " Move to the previous buffer
+nnoremap <leader>bn :bn<CR>     " Move to the next buffer
+nnoremap <leader>bp :bp<CR>     " Move to the previous buffer
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
 nnoremap gh :MundoToggle<CR>
 nnoremap <leader>af :ALEFix<CR>
+nnoremap <leader>d :set background=dark<CR>
+nnoremap <leader>l :set background=light<CR>
 nnoremap Y y$
 
 if exists(':tnoremap')
@@ -244,13 +286,3 @@ if has('win32') && has('gui_running')
     set guioptions=ca
 endif
 
-let g:lightline#bufferline#shorten_path = 0
-let g:lightline#bufferline#unnamed      = '[No Name]'
-let g:lightline = {'colorscheme': 'challenger_deep'}
-let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
-let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-let g:lightline.component_type   = {'buffers': 'tabsel'}
-set noshowmode
-if has('unix')
-    set showtabline=2
-endif
