@@ -28,7 +28,6 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-surround'
-    Plug 'itchyny/lightline.vim'
     Plug 'vimwiki/vimwiki'
     Plug 'tpope/vim-vinegar'
     Plug 'tpope/vim-repeat'
@@ -40,7 +39,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'Quramy/tsuquyomi'
     Plug 'ekalinin/Dockerfile.vim'
     Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
-    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+    Plug 'challenger-deep-theme/vim', { 'as': 'challenger' }
     Plug 'dracula/vim', { 'as': 'dracula' }
     Plug 'altercation/vim-colors-solarized', { 'as': 'solarized' }
 
@@ -63,7 +62,6 @@ call plug#begin(s:editor_root . '/plugged')
     if has('unix')
         Plug 'christoomey/vim-tmux-navigator'
         Plug 'jiangmiao/auto-pairs'
-        Plug 'mgee/lightline-bufferline'
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         Plug 'junegunn/fzf.vim'
     endif
@@ -98,44 +96,15 @@ set completeopt=longest,menuone
 set incsearch
 syntax enable
 let g:solarized_termcolors=256
-colorscheme solarized
 let hour = strftime("%H")
-if 6 <= hour && hour < 18
-  set background=light
+if 6 <= hour && hour < 22
+    colorscheme solarized
+    set background=light
 else
-  set background=dark
+    let g:dracula_italic = 0
+    colorscheme challenger
+    highlight Normal ctermbg=None
 endif
-
-let g:lightline#bufferline#shorten_path = 0
-let g:lightline#bufferline#unnamed      = '[No Name]'
-let g:lightline = {'colorscheme': 'solarized'}
-let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
-let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-let g:lightline.component_type   = {'buffers': 'tabsel'}
-set noshowmode
-if has('unix')
-    set showtabline=2
-endif
-
-augroup LightlineColorscheme
-    autocmd!
-    autocmd ColorScheme * call s:lightline_update()
-augroup END
-function! s:lightline_update()
-    if !exists('g:loaded_lightline')
-        return
-    endif
-    try
-        if g:colors_name =~# 'wombat\|solarized\|landscape\|jellybeans\|seoul256\|Tomorrow'
-            let g:lightline.colorscheme =
-                        \ substitute(substitute(g:colors_name, '-', '_', 'g'), '256.*', '', '')
-            call lightline#init()
-            call lightline#colorscheme()
-            call lightline#update()
-        endif
-    catch
-    endtry
-endfunction
 
 filetype plugin indent on
 set tabstop=4
@@ -173,8 +142,8 @@ vnoremap <leader>q :norm @q<CR>
 nnoremap gb :ls<CR>:b<Space>
 nnoremap gh :MundoToggle<CR>
 nnoremap <leader>af :ALEFix<CR>
-nnoremap <leader>d :set background=dark<CR>
-nnoremap <leader>l :set background=light<CR>
+nnoremap <leader>d :colorscheme dracula<CR>
+nnoremap <leader>l :colorscheme solarized<CR>:set background=light<CR>
 nnoremap Y y$
 
 if exists(':tnoremap')
@@ -254,10 +223,6 @@ set wildignore+=*.tar.*
 
 " put abbreviations at the end
 inoremap \dlr '${:,.2f}'.format()<esc>i
-
-if has('unix') && !has('gui_running')
-    au VimLeave * :!clear
-endif
 
 if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
     set term=xterm
