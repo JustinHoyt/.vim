@@ -95,16 +95,6 @@ set smartcase
 set completeopt=longest,menuone
 set incsearch
 syntax enable
-let g:solarized_termcolors=256
-let hour = strftime("%H")
-if 6 <= hour && hour < 22
-    colorscheme solarized
-    set background=light
-else
-    let g:dracula_italic = 0
-    colorscheme challenger
-    highlight Normal ctermbg=None
-endif
 
 filetype plugin indent on
 set tabstop=4
