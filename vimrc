@@ -78,7 +78,6 @@ call plug#begin(s:editor_root . '/plugged')
         let g:ale_linters = {
         \   'java': [''],
         \}
-        set termguicolors
     endif
 
     if version < 800 && has('unix')
