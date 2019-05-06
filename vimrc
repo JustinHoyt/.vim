@@ -128,11 +128,10 @@ nnoremap <leader>bn :bn<CR>     " Move to the next buffer
 nnoremap <leader>bp :bp<CR>     " Move to the previous buffer
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 vnoremap <leader>q :norm @q<CR>
+nnoremap gt :!ctags -R .<CR>
 nnoremap gb :ls<CR>:b<Space>
 nnoremap gh :MundoToggle<CR>
 nnoremap <leader>af :ALEFix<CR>
-nnoremap <leader>d :colorscheme dracula<CR>
-nnoremap <leader>l :colorscheme solarized<CR>:set background=light<CR>
 nnoremap Y y$
 
 if exists(':tnoremap')
