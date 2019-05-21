@@ -42,6 +42,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger' }
     Plug 'dracula/vim', { 'as': 'dracula' }
     Plug 'altercation/vim-colors-solarized', { 'as': 'solarized' }
+    Plug 'vim-ruby/vim-ruby'
+    Plug 'tpope/vim-rails'
 
     if has('win32')
         Plug 'Shougo/vimproc.vim'
@@ -110,6 +112,7 @@ let g:VM_no_meta_mappings=1
 let g:vebugger_leader=','
 let mapleader = "\<space>"
 let g:rainbow_active = 1
+let g:startify_change_to_vcs_root=1
 
 "-----mappings-----"
 if has('unix')
