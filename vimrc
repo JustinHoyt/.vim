@@ -94,7 +94,7 @@ set smartcase
 set completeopt=longest,menuone
 set incsearch
 syntax enable
-colorscheme challenger_deep
+colorscheme dracula
 
 filetype plugin indent on
 set tabstop=4
@@ -334,7 +334,7 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Add diagnostic info for https://github.com/itchyny/lightline.vim
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'dracula',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
