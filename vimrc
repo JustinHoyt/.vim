@@ -377,11 +377,13 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 function! SetBackgroundMode(...)
-    if system("defaults read -g AppleInterfaceStyle") =~ 'Dark' && &background == "light"
+    let systemColor = system("defaults read -g AppleInterfaceStyle")
+    if systemColor =~ 'Dark' && &background == "light"
         set background=dark
-    elseif system("defaults read -g AppleInterfaceStyle") =~ 'does not exist' && &background == "dark"
+    elseif systemColor =~ 'does not exist' && &background == "dark"
         set background=light
     endif
 endfunction
 call SetBackgroundMode()
 call timer_start(1000, "SetBackgroundMode", {"repeat": -1})
+set guicursor=a:blinkon500
