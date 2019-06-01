@@ -46,9 +46,9 @@ call plug#begin(s:editor_root . '/plugged')
     " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     " Plug 'dracula/vim', { 'as': 'dracula' }
     " Plug 'NLKNguyen/papercolor-theme'
-    " Plug 'morhetz/gruvbox'
     " Plug 'ayu-theme/ayu-vim'
-    Plug 'lifepillar/vim-solarized8'
+    " Plug 'lifepillar/vim-solarized8'
+    Plug 'morhetz/gruvbox'
 
     if has('win32')
         Plug 'Shougo/vimproc.vim'
@@ -106,7 +106,9 @@ set incsearch
 " let g:solarized_termtrans=1
 " let g:solarized_enable_extra_hi_groups = 1
 " let g:solarized_term_italics = 1
-colorscheme solarized
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors
+colorscheme gruvbox
 
 filetype plugin indent on
 set tabstop=4
@@ -209,7 +211,7 @@ augroup TrimTrailingWhitespace
 augroup END
 
 if has("gui_running")
-    colorscheme solarized
+    colorscheme gruvbox
     autocmd GUIEnter * set vb t_vb=
 endif
 
@@ -346,7 +348,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add diagnostic info for https://github.com/itchyny/lightline.vim
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
@@ -355,8 +357,6 @@ let g:lightline = {
       \   'cocstatus': 'coc#status'
       \ },
       \ }
-
-
 
 " Using CocList
 " Show all diagnostics
