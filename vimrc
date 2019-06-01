@@ -377,9 +377,9 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 function! SetBackgroundMode(...)
-    if system("defaults read -g AppleInterfaceStyle") =~ 'Dark'
+    if system("defaults read -g AppleInterfaceStyle") =~ 'Dark' && &background == "light"
         set background=dark
-    else
+    elseif system("defaults read -g AppleInterfaceStyle") =~ 'does not exist' && &background == "dark"
         set background=light
     endif
 endfunction
