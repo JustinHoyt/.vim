@@ -37,12 +37,18 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'Quramy/tsuquyomi'
     Plug 'ekalinin/Dockerfile.vim'
     Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
-    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-    Plug 'dracula/vim', { 'as': 'dracula' }
-    Plug 'altercation/vim-colors-solarized', { 'as': 'solarized' }
     Plug 'tpope/vim-rails'
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
     Plug 'itchyny/lightline.vim'
+    Plug 'tpope/vim-unimpaired'
+
+    " Themes
+    " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+    " Plug 'dracula/vim', { 'as': 'dracula' }
+    " Plug 'NLKNguyen/papercolor-theme'
+    " Plug 'morhetz/gruvbox'
+    " Plug 'ayu-theme/ayu-vim'
+    Plug 'lifepillar/vim-solarized8'
 
     if has('win32')
         Plug 'Shougo/vimproc.vim'
@@ -93,8 +99,14 @@ set ignorecase
 set smartcase
 set completeopt=longest,menuone
 set incsearch
-syntax enable
-colorscheme dracula
+
+" au ColorScheme * highlight Normal ctermbg=none guibg=none
+" au ColorScheme myspecialcolors hi Normal ctermbg=red guibg=red
+" au ColorScheme * highlight LineNr ctermfg=none ctermbg=none
+" let g:solarized_termtrans=1
+" let g:solarized_enable_extra_hi_groups = 1
+" let g:solarized_term_italics = 1
+colorscheme solarized
 
 filetype plugin indent on
 set tabstop=4
@@ -334,7 +346,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add diagnostic info for https://github.com/itchyny/lightline.vim
 let g:lightline = {
-      \ 'colorscheme': 'dracula',
+      \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
@@ -364,4 +376,12 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-set termguicolors
+function! SetBackgroundMode(...)
+    if system("defaults read -g AppleInterfaceStyle") =~ 'Dark'
+        set background=dark
+    else
+        set background=light
+    endif
+endfunction
+call SetBackgroundMode()
+call timer_start(1000, "SetBackgroundMode", {"repeat": -1})
