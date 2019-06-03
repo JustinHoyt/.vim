@@ -197,8 +197,10 @@ augroup autosourcing
     autocmd!
     if has('nvim')
         autocmd BufWritePost vimrc execute "source " . s:editor_root . "/init.vim"
+        autocmd BufWritePost vimrc execute "call LightlineReload()"
     else
         autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
+        autocmd BufWritePost vimrc execute "call LightlineReload()"
         if has('win32') && has('gui_running')
             autocmd BufWritePost vimrc simalt ~x
         endif
@@ -376,14 +378,24 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+function! LightlineReload()
+    runtime autoload/lightline/colorscheme/gruvbox.vim
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
+endfunction
+
 function! SetBackgroundMode(...)
     let systemColor = system("defaults read -g AppleInterfaceStyle")
     if systemColor =~ 'Dark' && &background == "light"
         set background=dark
+        call LightlineReload()
     elseif systemColor =~ 'does not exist' && &background == "dark"
         set background=light
+        call LightlineReload()
     endif
 endfunction
+
 call SetBackgroundMode()
 call timer_start(1000, "SetBackgroundMode", {"repeat": -1})
 set guicursor=a:blinkon500
