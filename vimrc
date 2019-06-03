@@ -109,6 +109,7 @@ set incsearch
 " let g:solarized_term_italics = 1
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
+let g:one_allow_italics = 1
 colorscheme one
 
 filetype plugin indent on
