@@ -48,7 +48,8 @@ call plug#begin(s:editor_root . '/plugged')
     " Plug 'NLKNguyen/papercolor-theme'
     " Plug 'ayu-theme/ayu-vim'
     " Plug 'lifepillar/vim-solarized8'
-    Plug 'morhetz/gruvbox'
+    " Plug 'morhetz/gruvbox'
+    Plug 'rakr/vim-one'
 
     if has('win32')
         Plug 'Shougo/vimproc.vim'
@@ -108,7 +109,7 @@ set incsearch
 " let g:solarized_term_italics = 1
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
-colorscheme gruvbox
+colorscheme one
 
 filetype plugin indent on
 set tabstop=4
@@ -213,7 +214,7 @@ augroup TrimTrailingWhitespace
 augroup END
 
 if has("gui_running")
-    colorscheme gruvbox
+    colorscheme one
     autocmd GUIEnter * set vb t_vb=
 endif
 
@@ -350,7 +351,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add diagnostic info for https://github.com/itchyny/lightline.vim
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
@@ -379,7 +380,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 function! LightlineReload()
-    runtime autoload/lightline/colorscheme/gruvbox.vim
+    runtime autoload/lightline/colorscheme/one.vim
     call lightline#init()
     call lightline#colorscheme()
     call lightline#update()
