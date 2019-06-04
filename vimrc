@@ -153,11 +153,35 @@ nnoremap gb :ls<CR>:b<Space>
 nnoremap gh :MundoToggle<CR>
 nnoremap <leader>af :ALEFix<CR>
 nnoremap Y y$
+nnoremap gs :mksession! ./.session.vim<CR>
+nnoremap gl :source ./.session.vim<CR>
 
 if exists(':tnoremap')
     nnoremap <leader>t :20Term<CR>
     nnoremap gh :Term<CR>
     nnoremap gv :VTerm<CR>
+    let g:disable_key_mappings=1
+    tnoremap <C-\> <C-\><C-n>
+    " Alt+[hjkl] to navigate through windows in insert mode
+    tnoremap <A-h> <C-\><C-n><C-w>h
+    tnoremap <A-j> <C-\><C-n><C-w>j
+    tnoremap <A-k> <C-\><C-n><C-w>k
+    tnoremap <A-l> <C-\><C-n><C-w>l
+
+    " Alt+[hjkl] to navigate through windows in normal mode
+    nnoremap <A-h> <C-w>h
+    nnoremap <A-j> <C-w>j
+    nnoremap <A-k> <C-w>k
+    nnoremap <A-l> <C-w>l
+
+    " Ctrl+Arrows to navigate through windows in insert mode
+    tnoremap <C-Left>  <C-\><C-n><C-w>h
+    tnoremap <C-Down>  <C-\><C-n><C-w>j
+    tnoremap <C-Up>    <C-\><C-n><C-w>k
+    tnoremap <C-Right> <C-\><C-n><C-w>l
+
+    " Easier time when pasting content in terminal mode with <C-v>
+    tnoremap <expr> <C-v> '<C-\><C-N>pi'
 endif
 
 " pulls vim changes from git
@@ -176,14 +200,6 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W><C-=>
-
-if exists(':tnoremap')
-    tnoremap <C-n> <C-\><C-n>
-    tnoremap <C-J> <C-W><C-J>
-    tnoremap <C-K> <C-W><C-K>
-    tnoremap <C-L> <C-W><C-L>
-    tnoremap <C-H> <C-W><C-H>
-endif
 
 " buffer mappings
 set hidden                      " This allows buffers to be hidden if you've modified a buffer
