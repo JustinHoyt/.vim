@@ -42,6 +42,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'itchyny/lightline.vim'
     Plug 'tpope/vim-unimpaired'
     Plug 'vimlab/split-term.vim'
+    Plug 'mg979/vim-visual-multi'
 
     " Themes
     " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
