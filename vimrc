@@ -32,11 +32,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-vinegar'
     Plug 'tpope/vim-repeat'
     Plug 'mhinz/vim-startify'
-    Plug 'markonm/traces.vim'
     Plug 'simnalamburt/vim-mundo'
-    Plug 'Quramy/tsuquyomi'
     Plug 'ekalinin/Dockerfile.vim'
-    Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
     Plug 'tpope/vim-rails'
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
     Plug 'itchyny/lightline.vim'
@@ -53,14 +50,12 @@ call plug#begin(s:editor_root . '/plugged')
     " Plug 'morhetz/gruvbox'
     Plug 'rakr/vim-one'
 
-    if has('win32')
-        Plug 'Shougo/vimproc.vim'
-    else
-        Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-    endif
-    if ( has('python') || has('python2') || has('python3') ) && has('win32')
+    if has('unix')
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        Plug 'junegunn/fzf.vim'
+    elseif has('win32') && ( has('python') || has('python2') || has('python3') )
         Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-    else
+    elseif has('win32')
         Plug 'ctrlpvim/ctrlp.vim'
         if executable('rg')
             set grepprg=rg\ --color=never
@@ -69,25 +64,7 @@ call plug#begin(s:editor_root . '/plugged')
         endif
     endif
 
-    if has('unix')
-        Plug 'christoomey/vim-tmux-navigator'
-        Plug 'jiangmiao/auto-pairs'
-        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-        Plug 'junegunn/fzf.vim'
-    endif
-
-
     Plug 'w0rp/ale'
-    let g:ale_fixers = {
-    \   'javascript': ['eslint'],
-    \   'typescript': ['tslint'],
-    \   'python': ['autopep8'],
-    \   'java': [''],
-    \}
-    let g:ale_linters = {
-    \   'java': [''],
-    \   'python': ['mypy'],
-    \}
 
     if version < 800 && has('unix')
         Plug 'vim-syntastic/syntastic'
@@ -104,13 +81,6 @@ set completeopt=longest,menuone
 set incsearch
 set mouse=a
 
-" au ColorScheme * highlight Normal ctermbg=none guibg=none
-" au ColorScheme myspecialcolors hi Normal ctermbg=red guibg=red
-" au ColorScheme * highlight LineNr ctermfg=none ctermbg=none
-" let g:solarized_termtrans=1
-" let g:solarized_enable_extra_hi_groups = 1
-" let g:solarized_term_italics = 1
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 let g:one_allow_italics = 1
 colorscheme one
@@ -131,6 +101,16 @@ let g:vebugger_leader=','
 let mapleader = "\<space>"
 let g:rainbow_active = 1
 let g:startify_change_to_vcs_root=1
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'typescript': ['tslint'],
+\   'python': ['autopep8'],
+\   'java': [''],
+\}
+let g:ale_linters = {
+\   'java': [''],
+\   'python': ['mypy'],
+\}
 
 "-----mappings-----"
 if has('unix')
