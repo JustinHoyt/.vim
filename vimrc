@@ -41,6 +41,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
     Plug 'itchyny/lightline.vim'
     Plug 'tpope/vim-unimpaired'
+    Plug 'vimlab/split-term.vim'
 
     " Themes
     " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
@@ -100,6 +101,7 @@ set ignorecase
 set smartcase
 set completeopt=longest,menuone
 set incsearch
+set mouse=a
 
 " au ColorScheme * highlight Normal ctermbg=none guibg=none
 " au ColorScheme myspecialcolors hi Normal ctermbg=red guibg=red
@@ -153,13 +155,9 @@ nnoremap <leader>af :ALEFix<CR>
 nnoremap Y y$
 
 if exists(':tnoremap')
-    if has('win32')
-        nnoremap <leader>T :tab terminal<CR>Set-Theme tehrob<CR>clear<CR>
-        nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>Set-Theme tehrob<CR>clear<CR>
-    else
-        nnoremap <leader>T :tab terminal<CR>set -o vi<CR>
-        nnoremap <leader>t :terminal<cr><C-w>:exe "resize " . (winheight(0) * 2/3)<CR>set -o vi<CR>
-    endif
+    nnoremap <leader>t :20Term<CR>
+    nnoremap gh :Term<CR>
+    nnoremap gv :VTerm<CR>
 endif
 
 " pulls vim changes from git
