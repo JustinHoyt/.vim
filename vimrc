@@ -40,6 +40,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-unimpaired'
     Plug 'vimlab/split-term.vim'
     Plug 'mg979/vim-visual-multi'
+    Plug 'keith/swift.vim'
 
     " Themes
     " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
@@ -129,7 +130,7 @@ nnoremap <leader>bn :bn<CR>     " Move to the next buffer
 nnoremap <leader>bp :bp<CR>     " Move to the previous buffer
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
 vnoremap <leader>q :norm @q<CR>
-nnoremap gt :!ctags -R .<CR>
+nnoremap gt :!ctags -R --exclude=.git --exclude=node_modules --exclude=out --exclude=build .<CR>
 nnoremap gb :ls<CR>:b<Space>
 nnoremap gh :MundoToggle<CR>
 nnoremap <leader>af :ALEFix<CR>
@@ -141,8 +142,9 @@ if exists(':tnoremap')
     nnoremap <leader>t :20Term<CR>
     nnoremap gh :Term<CR>
     nnoremap gv :VTerm<CR>
+
     let g:disable_key_mappings=1
-    tnoremap <C-\> <C-\><C-n>
+    tnoremap <Esc><Esc> <C-\><C-n>
     " Alt+[hjkl] to navigate through windows in insert mode
     tnoremap <A-h> <C-\><C-n><C-w>h
     tnoremap <A-j> <C-\><C-n><C-w>j
@@ -202,6 +204,11 @@ augroup autosourcing
             autocmd BufWritePost vimrc simalt ~x
         endif
     endif
+augroup END
+
+augroup RefreshVimOnChange
+    autocmd!
+    au FocusGained,BufEnter * :checktime
 augroup END
 
 augroup TrimTrailingWhitespace
