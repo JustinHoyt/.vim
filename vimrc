@@ -41,6 +41,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'vimlab/split-term.vim'
     Plug 'mg979/vim-visual-multi'
     Plug 'keith/swift.vim'
+    Plug 'tpope/vim-fugitive'
+    Plug 'janko/vim-test'
 
     " Themes
     " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
@@ -95,12 +97,8 @@ set infercase
 set splitbelow
 set splitright
 set noerrorbells
-let g:gutentags_file_list_command = 'rg --files'
-let g:tsuquyomi_single_quote_import=1
-let g:VM_no_meta_mappings=1
 let g:vebugger_leader=','
 let mapleader = "\<space>"
-let g:rainbow_active = 1
 let g:startify_change_to_vcs_root=1
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
@@ -137,6 +135,8 @@ nnoremap <leader>af :ALEFix<CR>
 nnoremap Y y$
 nnoremap gs :mksession! ./.session.vim<CR>
 nnoremap gl :source ./.session.vim<CR>
+nmap <silent> <M-f> :TestFile<CR>
+nmap <silent> <M-s> :TestSuite<CR>
 
 if exists(':tnoremap')
     nnoremap <leader>t :20Term<CR>
@@ -144,7 +144,7 @@ if exists(':tnoremap')
     nnoremap gv :VTerm<CR>
 
     let g:disable_key_mappings=1
-    tnoremap <Esc><Esc> <C-\><C-n>
+    tnoremap \\ <C-\><C-n>
     " Alt+[hjkl] to navigate through windows in insert mode
     tnoremap <A-h> <C-\><C-n><C-w>h
     tnoremap <A-j> <C-\><C-n><C-w>j
