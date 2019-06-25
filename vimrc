@@ -275,7 +275,7 @@ set updatetime=300
 set shortmess+=c
 
 " always show signcolumns
-set signcolumn=yes
+" set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -319,7 +319,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -400,6 +400,8 @@ function! SetBackgroundMode(...)
     endif
 endfunction
 
-call SetBackgroundMode()
-call timer_start(1000, "SetBackgroundMode", {"repeat": -1})
-set guicursor=a:blinkon500
+if has('macunix')
+    call SetBackgroundMode()
+    call timer_start(1000, "SetBackgroundMode", {"repeat": -1})
+    set guicursor=a:blinkon500
+endif
