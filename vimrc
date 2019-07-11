@@ -82,7 +82,6 @@ set ignorecase
 set smartcase
 set completeopt=longest,menuone
 set incsearch
-set mouse=a
 
 set termguicolors
 let g:one_allow_italics = 1
