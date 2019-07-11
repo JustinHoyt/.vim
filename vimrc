@@ -404,4 +404,6 @@ if has('macunix')
     call SetBackgroundMode()
     call timer_start(1000, "SetBackgroundMode", {"repeat": -1})
     set guicursor=a:blinkon500
+else
+    set background=light
 endif
