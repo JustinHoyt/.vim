@@ -35,7 +35,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'simnalamburt/vim-mundo'
     Plug 'ekalinin/Dockerfile.vim'
     Plug 'tpope/vim-rails'
-    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'itchyny/lightline.vim'
     Plug 'tpope/vim-unimpaired'
     Plug 'vimlab/split-term.vim'
