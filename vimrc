@@ -134,6 +134,11 @@ nnoremap <leader>af :ALEFix<CR>
 nnoremap Y y$
 nnoremap gs :mksession! ./.session.vim<CR>
 nnoremap gl :source ./.session.vim<CR>
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <M-f> :TestFile<CR>
 nmap <silent> <M-s> :TestSuite<CR>
 
