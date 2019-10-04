@@ -43,6 +43,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'keith/swift.vim'
     Plug 'tpope/vim-fugitive'
     Plug 'janko/vim-test'
+    Plug 'honza/vim-snippets'
 
     " Themes
     " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
