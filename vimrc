@@ -108,7 +108,7 @@ let g:ale_fixers = {
 \}
 let g:ale_linters = {
 \   'java': [''],
-\   'python': ['mypy'],
+\   'python': ['flake8'],
 \}
 
 "-----mappings-----"
