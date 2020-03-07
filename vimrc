@@ -124,6 +124,7 @@ nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>rp :w<CR>:!python3 %<CR>
 nnoremap <leader>pt :!python3 test_%<CR>
+nnoremap <leader>rj :w<CR>:!node %<CR>
 nnoremap <leader>bn :bn<CR>     " Move to the next buffer
 nnoremap <leader>bp :bp<CR>     " Move to the previous buffer
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
@@ -325,9 +326,6 @@ endfunction
 
 " Highlight symbol under cursor on CursorHold
 " autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
 
 " " Remap for format selected region
 " xmap <leader>f  <Plug>(coc-format-selected)
