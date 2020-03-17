@@ -143,6 +143,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <M-f> :TestFile<CR>
 nmap <silent> <M-s> :TestSuite<CR>
+nnoremap <A-Enter>  :CocList actions<cr>
 
 if exists(':tnoremap')
     nnoremap <leader>t :20Term<CR>
@@ -253,9 +254,6 @@ if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
 endif
 
 if has('unix') && has('gui_running')
-    set macligatures
-    set lines=999 columns=9999
-    set guifont=Fira\ Code:h12
     set guioptions=ca
 endif
 
