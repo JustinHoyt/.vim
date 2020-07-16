@@ -53,7 +53,7 @@ set termguicolors
 let mapleader = " "
 
 let g:one_allow_italics = 1
-colorscheme github
+colorscheme one
 
 filetype plugin indent on
 set tabstop=4
@@ -227,5 +227,5 @@ if has('macunix')
     call timer_start(1000, "SetBackgroundMode", {"repeat": -1})
     set guicursor=a:blinkon500
 else
-    " set background=light
+    set background=light
 endif
