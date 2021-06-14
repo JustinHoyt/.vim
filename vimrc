@@ -53,9 +53,10 @@ set termguicolors
 let mapleader = " "
 
 let g:one_allow_italics = 1
-colorscheme one
+" colorscheme one
 
 filetype plugin indent on
+" set term=xterm-256color
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -147,6 +148,7 @@ set hidden                      " This allows buffers to be hidden if you've mod
 " Takes clipboard link of github to plugin and turns it into vim-plug syntax
 let @p = 'oPlug ''''"+PF''ldf/.'
 
+
 "-----auto-commands-----"
 augroup autosourcing
     autocmd!
@@ -192,40 +194,3 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Add diagnostic info for https://github.com/itchyny/lightline.vim
-let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ }
-
-function! LightlineReload()
-    runtime autoload/lightline/colorscheme/one.vim
-    call lightline#init()
-    call lightline#colorscheme()
-    call lightline#update()
-endfunction
-
-function! SetBackgroundMode(...)
-    let systemColor = system("defaults read -g AppleInterfaceStyle")
-    if systemColor =~ 'Dark' && &background == "light"
-        set background=dark
-        call LightlineReload()
-    elseif systemColor =~ 'does not exist' && &background == "dark"
-        set background=light
-        call LightlineReload()
-    endif
-endfunction
-
-if has('macunix')
-    call SetBackgroundMode()
-    call timer_start(1000, "SetBackgroundMode", {"repeat": -1})
-    set guicursor=a:blinkon500
-else
-    set background=light
-endif
