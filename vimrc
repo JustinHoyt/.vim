@@ -50,17 +50,19 @@ set ignorecase
 set smartcase
 set completeopt=longest,menuone
 set incsearch
-set termguicolors
 if !has('mac')
     let g:auto_color_switcher#desable = v:true
 endif
 let mapleader = " "
 
+if (has("termguicolors"))
+    set termguicolors
+    set t_Co=256
+endif
 let g:one_allow_italics = 1
 colorscheme one
 
 filetype plugin indent on
-" set term=xterm-256color
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -74,10 +76,6 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'typescript': ['tslint'],
 \}
-
-if !has('gui_running')
-  set t_Co=256
-endif
 
 "-----mappings-----"
 if has('unix')
@@ -190,8 +188,12 @@ augroup END
 
 augroup autosourcing
     autocmd!
-    autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
-    autocmd BufWritePost vimrc execute LightlineReload()
+    if has('nvim')
+        autocmd BufWritePost vimrc execute "source " . s:editor_root . "/init.vim"
+    else
+        autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
+    endif
+    autocmd BufWritePost vimrc execute UpdateBackground()
 augroup END
 
 augroup TrimTrailingWhitespace
