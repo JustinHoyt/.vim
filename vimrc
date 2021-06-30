@@ -28,7 +28,6 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'mhinz/vim-startify'
     Plug 'tpope/vim-unimpaired'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'itchyny/lightline.vim'
     Plug 'honza/vim-snippets'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
@@ -36,7 +35,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'rakr/vim-one'
     Plug 'cormacrelf/vim-colors-github'
     Plug 'nicwest/vim-camelsnek'
-
+    Plug 'itchyny/lightline.vim'
+    Plug 'mg979/vim-visual-multi'
     if version < 800 && has('unix')
         Plug 'vim-syntastic/syntastic'
     endif
@@ -51,10 +51,13 @@ set smartcase
 set completeopt=longest,menuone
 set incsearch
 set termguicolors
+if !has('mac')
+    let g:auto_color_switcher#desable = v:true
+endif
 let mapleader = " "
 
 let g:one_allow_italics = 1
-" colorscheme one
+colorscheme one
 
 filetype plugin indent on
 " set term=xterm-256color
@@ -71,6 +74,10 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'typescript': ['tslint'],
 \}
+
+if !has('gui_running')
+  set t_Co=256
+endif
 
 "-----mappings-----"
 if has('unix')
@@ -149,23 +156,42 @@ set hidden                      " This allows buffers to be hidden if you've mod
 
 "-----Macros-----"
 " Takes clipboard link of github to plugin and turns it into vim-plug syntax
-let @p = 'oPlug ''''"+PF''ldf/.'
+let @p = "oPlug '*'T/;dT'"
 
+" Add diagnostic info for https://github.com/itchyny/lightline.vim
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
+
+function UpdateBackground()
+    if system("defaults read -g AppleInterfaceStyle") == "Dark\n"
+        if &bg == "light" | set bg=dark | endif
+    else
+        if &bg == "dark" | set bg=light | endif
+    endif
+    runtime autoload/lightline/colorscheme/one.vim
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
+endfunction
 
 "-----auto-commands-----"
-augroup autosourcing
-    autocmd!
-    if has('nvim')
-        autocmd BufWritePost vimrc execute "source " . s:editor_root . "/init.vim"
-    else
-        autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
-    endif
-    autocmd BufWritePost vimrc execute "call LightlineReload()"
+augroup nightfall
+  autocmd!
+  autocmd FocusGained,BufEnter * call UpdateBackground()
 augroup END
 
-augroup RefreshVimOnChange
+augroup autosourcing
     autocmd!
-    au FocusGained,BufEnter * :checktime
+    autocmd BufWritePost vimrc execute "source " . s:editor_root . "/vimrc"
+    autocmd BufWritePost vimrc execute LightlineReload()
 augroup END
 
 augroup TrimTrailingWhitespace
