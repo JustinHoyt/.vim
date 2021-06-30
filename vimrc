@@ -35,6 +35,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'w0rp/ale'
     Plug 'rakr/vim-one'
     Plug 'cormacrelf/vim-colors-github'
+    Plug 'nicwest/vim-camelsnek'
 
     if version < 800 && has('unix')
         Plug 'vim-syntastic/syntastic'
@@ -94,6 +95,8 @@ nnoremap <leader>af :ALEFix<CR>
 nnoremap Y y$
 nnoremap gs :mksession! ./.session.vim<CR>
 nnoremap gl :source ./.session.vim<CR>
+nnoremap <leader>s :Snek<CR>
+vnoremap <leader>s :Snek<CR>
 
 if exists(':tnoremap')
     nnoremap <leader>t :20Term<CR>
