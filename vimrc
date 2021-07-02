@@ -59,8 +59,11 @@ if (has("termguicolors"))
     set termguicolors
     set t_Co=256
 endif
-let g:one_allow_italics = 1
-colorscheme one
+
+if has('nvim')
+    let g:one_allow_italics = 1
+    colorscheme one
+endif
 
 filetype plugin indent on
 set tabstop=4
@@ -181,10 +184,12 @@ function UpdateBackground()
 endfunction
 
 "-----auto-commands-----"
-augroup nightfall
-  autocmd!
-  autocmd FocusGained,BufEnter * call UpdateBackground()
-augroup END
+if has('nvim')
+    augroup nightfall
+      autocmd!
+      autocmd FocusGained,BufEnter * call UpdateBackground()
+    augroup END
+endif
 
 augroup autosourcing
     autocmd!
