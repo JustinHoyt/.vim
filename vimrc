@@ -27,15 +27,24 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'tpope/vim-repeat'
     Plug 'mhinz/vim-startify'
     Plug 'tpope/vim-unimpaired'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
     Plug 'w0rp/ale'
     Plug 'rakr/vim-one'
+    Plug 'tpope/vim-fugitive'
+    Plug 'RRethy/vim-illuminate'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-vsnip'
+    Plug 'hrsh7th/vim-vsnip'
     Plug 'cormacrelf/vim-colors-github'
-    Plug 'nicwest/vim-camelsnek'
     Plug 'itchyny/lightline.vim'
+    Plug 'airblade/vim-gitgutter'
     Plug 'mg979/vim-visual-multi'
     if version < 800 && has('unix')
         Plug 'vim-syntastic/syntastic'
@@ -48,7 +57,7 @@ set hlsearch
 set shiftwidth=4
 set ignorecase
 set smartcase
-set completeopt=longest,menuone
+set completeopt=menu,menuone,noselect
 set incsearch
 if !has('mac')
     let g:auto_color_switcher#desable = v:true
@@ -76,9 +85,14 @@ set splitright
 set noerrorbells
 let g:startify_change_to_vcs_root=1
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\   'typescript': ['tslint'],
+\  'javascript': ['eslint'],
+\  'typescript': ['tslint'],
 \}
+let g:ale_linters = {
+\  'cs':['syntax', 'semantic', 'issues'],
+\  'python': ['pylint'],
+\  'java': []
+\ }
 
 "-----mappings-----"
 if has('unix')
@@ -96,15 +110,16 @@ nnoremap <leader>rj :w<CR>:!node %<CR>
 nnoremap <leader>bn :bn<CR>     " Move to the next buffer
 nnoremap <leader>bp :bp<CR>     " Move to the previous buffer
 nnoremap <silent> <esc><esc> :nohlsearch<CR><esc>
-vnoremap <leader>q :norm @q<CR>
 nnoremap gt :!ctags -R --exclude=.git --exclude=node_modules --exclude=out --exclude=build .<CR>
 nnoremap gb :ls<CR>:b<Space>
 nnoremap <leader>af :ALEFix<CR>
 nnoremap Y y$
 nnoremap gs :mksession! ./.session.vim<CR>
 nnoremap gl :source ./.session.vim<CR>
-nnoremap <leader>s :Snek<CR>
-vnoremap <leader>s :Snek<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap [l :set norelativenumber nonumber<CR>:GitGutterDisable<CR>
+nnoremap ]l :set relativenumber number<CR>:GitGutterEnable<CR>
 
 if exists(':tnoremap')
     nnoremap <leader>t :20Term<CR>
@@ -161,15 +176,20 @@ let @p = "oPlug '*'T/;dT'"
 
 " Add diagnostic info for https://github.com/itchyny/lightline.vim
 let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ }
+  \ 'colorscheme': 'one',
+  \ 'active': {
+  \   'left': [
+  \     [ 'mode', 'paste' ],
+  \     [ 'gitbranch', 'filename', 'readonly', 'modified' ],
+  \   ],
+  \   'right':[
+  \     [ 'filetype', 'fileencoding', 'lineinfo', 'percent' ],
+  \   ],
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'FugitiveHead',
+  \ },
+\ }
 
 function UpdateBackground()
     if system("defaults read -g AppleInterfaceStyle") == "Dark\n"
@@ -219,14 +239,144 @@ set wildignore+=*.tar.*
 " Better display for messages
 set cmdheight=2
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+au FileType java call SetWorkspaceFolders()
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+function! SetWorkspaceFolders() abort
+    " Only set g:WorkspaceFolders if it is not already set
+    if exists("g:WorkspaceFolders") | return | endif
+
+    if executable("findup")
+        let l:ws_dir = trim(system("cd '" . expand("%:h") . "' && findup packageInfo"))
+        " Bemol conveniently generates a '$WS_DIR/.bemol/ws_root_folders' file, so let's leverage it
+        let l:folders_file = l:ws_dir . "/.bemol/ws_root_folders"
+        if filereadable(l:folders_file)
+            let l:ws_folders = readfile(l:folders_file)
+            let g:WorkspaceFolders = filter(l:ws_folders, "isdirectory(v:val)")
+        endif
+    endif
+endfunction
+
+
+lua << EOF
+local nvim_lsp = require('lspconfig')
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+end
+
+-- Setup nvim-cmp.
+local cmp = require'cmp'
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<C-e>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+-- Setup lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'tsserver' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+
+local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+
+local eclipse_dir = os.getenv('HOME') .. '/.config/eclipse-jdt/'
+
+nvim_lsp['jdtls'].setup {
+  cmd = {
+    'java',
+    '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+    '-Dosgi.bundles.defaultStartLevel=4',
+    '-Declipse.product=org.eclipse.jdt.ls.core.product',
+    '-Dlog.protocol=true',
+    '-Dlog.level=ALL',
+    '-Xms1g',
+    '--add-modules=ALL-SYSTEM',
+    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+    '-javaagent:' .. eclipse_dir .. '/lombok.jar',
+    '-Xbootclasspath/a:' .. eclipse_dir .. '/lombok.jar',
+    '-jar', eclipse_dir .. '/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
+    '-configuration', eclipse_dir .. '/config_linux',
+    '-data', eclipse_dir .. project_name
+  },
+
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  }
+}
+EOF
 
