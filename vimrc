@@ -1,5 +1,4 @@
 "-----Newly Learned Vim Features-----"
-" <visual> o: alternates cursor position of highlighed text
 " <C-f> inside command mode opens the command line window
 " q: does the same thing but from normal mode
 "
@@ -72,6 +71,7 @@ endif
 if has('nvim')
     let g:one_allow_italics = 1
     colorscheme one
+    set bg=light
 endif
 
 filetype plugin indent on
@@ -120,6 +120,7 @@ nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap [l :set norelativenumber nonumber<CR>:GitGutterDisable<CR>
 nnoremap ]l :set relativenumber number<CR>:GitGutterEnable<CR>
+nnoremap yob :call ToggleBackground()<CR>
 
 if exists(':tnoremap')
     nnoremap <leader>t :20Term<CR>
@@ -203,8 +204,20 @@ function UpdateBackground()
     call lightline#update()
 endfunction
 
+function ToggleBackground()
+    if &bg == "light"
+        set bg=dark
+    else
+        set bg=light
+    endif
+    runtime autoload/lightline/colorscheme/one.vim
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
+endfunction
+
 "-----auto-commands-----"
-if has('nvim')
+if has('nvim') && has('mac')
     augroup nightfall
       autocmd!
       autocmd FocusGained,BufEnter * call UpdateBackground()
@@ -366,7 +379,6 @@ nvim_lsp['jdtls'].setup {
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
     '-javaagent:' .. eclipse_dir .. '/lombok.jar',
-    '-Xbootclasspath/a:' .. eclipse_dir .. '/lombok.jar',
     '-jar', eclipse_dir .. '/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
     '-configuration', eclipse_dir .. '/config_linux',
     '-data', eclipse_dir .. project_name
