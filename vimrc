@@ -34,6 +34,7 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'rakr/vim-one'
     Plug 'tpope/vim-fugitive'
     Plug 'RRethy/vim-illuminate'
+    Plug 'mfussenegger/nvim-jdtls'
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-buffer'
@@ -119,7 +120,7 @@ nnoremap <leader>w :w<CR>
 nnoremap [l :set norelativenumber nonumber<CR>:GitGutterDisable<CR>
 nnoremap ]l :set relativenumber number<CR>:GitGutterEnable<CR>
 nnoremap yob :call ToggleBackground()<CR>
-nnoremap <leader>d :GitGutterPreviewHunk<CR>
+nnoremap <leader>d :Gdiff<CR>
 nnoremap <leader>o :FZF<CR>
 nnoremap <leader>g :Rg<CR>
 " Opens list of registers to paste from
@@ -233,8 +234,6 @@ set cmdheight=2
 
 
 lua << EOF
-local nvim_lsp = require('lspconfig')
-
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -266,6 +265,23 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
+end
+
+-- Setup lspconfig.
+local nvim_lsp = require('lspconfig')
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'tsserver' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
 end
 
 -- Setup nvim-cmp.
@@ -308,48 +324,61 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
--- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150,
+jdtls_setup = function()
+    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+    local eclipse_dir = os.getenv('HOME') .. '/.config/eclipse-jdt/'
+    local root_dir = require('jdtls.setup').find_root({'packageInfo'}, 'Config')
+    local home = os.getenv('HOME')
+    local eclipse_workspace = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ':p:h:t')
+
+    local ws_folders_lsp = {}
+    local ws_folders_jdtls = {}
+    if root_dir then
+        local file = io.open(root_dir .. "/.bemol/ws_root_folders", "r");
+        if file then
+            for line in file:lines() do
+                table.insert(ws_folders_lsp, line);
+                table.insert(ws_folders_jdtls, string.format("file://%s", line))
+            end
+            file:close()
+        end
+    end
+
+    local config = {
+        on_attach = on_attach,
+        cmd = {
+            'java',
+            '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+            '-Dosgi.bundles.defaultStartLevel=4',
+            '-Declipse.product=org.eclipse.jdt.ls.core.product',
+            '-Dlog.protocol=true',
+            '-Dlog.level=ALL',
+            '-Xms1g',
+            '--add-modules=ALL-SYSTEM',
+            '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+            '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+            '-javaagent:' .. eclipse_dir .. '/lombok.jar',
+            '-jar', eclipse_dir .. '/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
+            '-configuration', eclipse_dir .. '/config_linux',
+            '-data', eclipse_dir .. project_name,
+            eclipse_workspace
+        },
+        root_dir = root_dir,
+        init_options = {
+            workspaceFolders = ws_folders_jdtls,
+        },
     }
-  }
+
+    require('jdtls').start_or_attach(config)
+
+    for _,line in ipairs(ws_folders_lsp) do
+        vim.lsp.buf.add_workspace_folder(line)
+    end
 end
-
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-
-local eclipse_dir = os.getenv('HOME') .. '/.config/eclipse-jdt/'
-
-nvim_lsp['jdtls'].setup {
-  cmd = {
-    'java',
-    '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-    '-Dosgi.bundles.defaultStartLevel=4',
-    '-Declipse.product=org.eclipse.jdt.ls.core.product',
-    '-Dlog.protocol=true',
-    '-Dlog.level=ALL',
-    '-Xms1g',
-    '--add-modules=ALL-SYSTEM',
-    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-    '-javaagent:' .. eclipse_dir .. '/lombok.jar',
-    '-jar', eclipse_dir .. '/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
-    '-configuration', eclipse_dir .. '/config_linux',
-    '-data', eclipse_dir .. project_name
-  },
-
-  on_attach = on_attach,
-  capabilities = capabilities,
-  flags = {
-    debounce_text_changes = 150,
-  }
-}
 EOF
+
+augroup lsp
+    autocmd!
+    autocmd FileType java luado jdtls_setup()
+augroup end
