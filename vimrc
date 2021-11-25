@@ -6,6 +6,7 @@
 " rm -f vim.log && vim --startuptime vim.log +q && tail -n 1 vim.log | cut -f1 -d' '
 " rm -force -ErrorAction Ignore vim.log; vim --startuptime vim.log +q; tail -n 1 vim.log | cut -f1 -d' '
 
+
 set nocompatible              " be iMproved, required
 if has('nvim')
     let s:editor_root=expand("~/.config/nvim")
@@ -45,6 +46,8 @@ call plug#begin(s:editor_root . '/plugged')
     Plug 'itchyny/lightline.vim'
     Plug 'airblade/vim-gitgutter'
     Plug 'mg979/vim-visual-multi'
+    Plug 'svermeulen/vim-yoink'
+    Plug 'yazgoo/yank-history'
     if version < 800 && has('unix')
         Plug 'vim-syntastic/syntastic'
     endif
@@ -83,7 +86,7 @@ set infercase
 set splitbelow
 set splitright
 set noerrorbells
-let g:startify_change_to_vcs_root=1
+" let g:startify_change_to_vcs_root=1
 let g:ale_fixers = {
 \  'javascript': ['eslint'],
 \  'typescript': ['tslint'],
@@ -95,10 +98,6 @@ let g:ale_linters = {
 \ }
 
 "-----mappings-----"
-if has('unix')
-    nnoremap <leader>o :FZF<CR>
-    nnoremap <leader>f :Rg<CR>
-endif
 nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> \- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <leader>ev :silent e ~/.vim/vimrc<CR>
@@ -117,39 +116,19 @@ nnoremap Y y$
 nnoremap gs :mksession! ./.session.vim<CR>
 nnoremap gl :source ./.session.vim<CR>
 nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
 nnoremap [l :set norelativenumber nonumber<CR>:GitGutterDisable<CR>
 nnoremap ]l :set relativenumber number<CR>:GitGutterEnable<CR>
 nnoremap yob :call ToggleBackground()<CR>
-
-if exists(':tnoremap')
-    nnoremap <leader>t :20Term<CR>
-    nnoremap gh :Term<CR>
-    nnoremap gv :VTerm<CR>
-
-    let g:disable_key_mappings=1
-    tnoremap \\ <C-\><C-n>
-    " Alt+[hjkl] to navigate through windows in insert mode
-    tnoremap <A-h> <C-\><C-n><C-w>h
-    tnoremap <A-j> <C-\><C-n><C-w>j
-    tnoremap <A-k> <C-\><C-n><C-w>k
-    tnoremap <A-l> <C-\><C-n><C-w>l
-
-    " Alt+[hjkl] to navigate through windows in normal mode
-    nnoremap <A-h> <C-w>h
-    nnoremap <A-j> <C-w>j
-    nnoremap <A-k> <C-w>k
-    nnoremap <A-l> <C-w>l
-
-    " Ctrl+Arrows to navigate through windows in insert mode
-    tnoremap <C-Left>  <C-\><C-n><C-w>h
-    tnoremap <C-Down>  <C-\><C-n><C-w>j
-    tnoremap <C-Up>    <C-\><C-n><C-w>k
-    tnoremap <C-Right> <C-\><C-n><C-w>l
-
-    " Easier time when pasting content in terminal mode with <C-v>
-    tnoremap <expr> <C-v> '<C-\><C-N>pi'
-endif
+nnoremap <leader>d :GitGutterPreviewHunk<CR>
+nnoremap <leader>o :FZF<CR>
+nnoremap <leader>g :Rg<CR>
+" Opens list of registers to paste from
+nnoremap gp :reg <bar> exec 'normal! "'.input('>').'p'<CR>
+nmap <leader>h :YankHistoryRgPaste<CR>
+nmap <c-n> <plug>(YoinkPostPasteSwapBack)
+nmap <c-p> <plug>(YoinkPostPasteSwapForward)
+nmap p <plug>(YoinkPaste_p)
+nmap P <plug>(YoinkPaste_P)
 
 " pulls vim changes from git
 if has('unix')
@@ -159,7 +138,7 @@ elseif has ('win32')
 endif
 
 " Renames selected word accross the file
-nnoremap <leader>rn :%s/\<<c-r><c-w>\>/
+" nnoremap <leader>rn :%s/\<<c-r><c-w>\>/
 
 " more natural windows mappings
 nnoremap <C-J> <C-W><C-J>
@@ -252,23 +231,6 @@ set wildignore+=*.tar.*
 " Better display for messages
 set cmdheight=2
 
-au FileType java call SetWorkspaceFolders()
-
-function! SetWorkspaceFolders() abort
-    " Only set g:WorkspaceFolders if it is not already set
-    if exists("g:WorkspaceFolders") | return | endif
-
-    if executable("findup")
-        let l:ws_dir = trim(system("cd '" . expand("%:h") . "' && findup packageInfo"))
-        " Bemol conveniently generates a '$WS_DIR/.bemol/ws_root_folders' file, so let's leverage it
-        let l:folders_file = l:ws_dir . "/.bemol/ws_root_folders"
-        if filereadable(l:folders_file)
-            let l:ws_folders = readfile(l:folders_file)
-            let g:WorkspaceFolders = filter(l:ws_folders, "isdirectory(v:val)")
-        endif
-    endif
-endfunction
-
 
 lua << EOF
 local nvim_lsp = require('lspconfig')
@@ -290,19 +252,19 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 end
 
@@ -391,4 +353,3 @@ nvim_lsp['jdtls'].setup {
   }
 }
 EOF
-
